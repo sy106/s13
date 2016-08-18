@@ -19,10 +19,12 @@ for i in range(3):
     password = raw_input("please input your password:").strip()
     if len(username)!=0 and len(password)!=0:
         f = file(account)
-        loginOK = False
-        for line in f.readlines():
-            line=line.split()
-            if username==line[0] and password==line[1]:#username and password are correct
+        loginOK = False#login 标志位
+        Names=f.readlines()#读出有效用户名和密码
+        for Auth in Names:
+            Auth=Auth.split()
+
+            if username==Auth[0] and password==Auth[1]:#username and password are correct
                 print "Wlcome %s login my system!" %username
                 loginOK =True
                 break
