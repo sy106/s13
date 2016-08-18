@@ -15,8 +15,8 @@ lock="lock.txt"
 
 
 for i in range(3):
-    username=raw_input("please input your username:").strip()
-    password=raw_input("please input your password:").strip()
+    username = raw_input("please input your username:").strip()
+    password = raw_input("please input your password:").strip()
     if len(username)!=0 and len(password)!=0:
         f = file(account)
         loginOK = False
