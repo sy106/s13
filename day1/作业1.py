@@ -13,7 +13,8 @@ os.system("more user.txt")
 account="user.txt"
 lock="lock.txt"
 
-
+WrongTime=0
+WrongName=[ ]
 for i in range(3):
     username = raw_input("please input your username:").strip()
     password = raw_input("please input your password:").strip()
@@ -28,11 +29,29 @@ for i in range(3):
                 print "Welcome %s login my system!" %username
                 loginOK =True
                 break
-            print "the login status1 is",loginOK
-            break
+                print "the login status1 is:",loginOK
+                break
+            if username==Auth[0] and password!=Auth[1] :#password is wrong
+                print 'Wrong password!please retry!'
+                break
+            if username!=Auth[0] :  #username is wrong
+
+                 WrongName.append(username)
+                 WrongTime = WrongTime + 1
+                 print 'wrong name is:',WrongName
+                 print 'wrong time is:', WrongTime
+                 print WrongName.count(username)
+                 if WrongName.count(username)==3:
+                     print WrongName
+                     a = file("lock.txt",'w')
+                     a.write(username)+('\n')
+                     a.close()
+                     os.system("more lock.txt")
+                 break
+
 
         if loginOK==True:
-            print "the login status2 is",loginOK
+            print "the login status2 is:",loginOK
             break
 
     else :

@@ -2,13 +2,13 @@
 #-*-coding:utf-8 -*-
 # Author: Sy106
 
-# name='sy106,sy107,sy108'
-# print name
-# name2=name.split(',')
-# print name2
-# name3=('!'.join(name2))
-# print name3
-#
+name='sy106,sy107,sy108'
+print name
+name2=name.split(',')
+print name2
+name3=('!'.join(name2))
+print name3
+
 name4 = "alex li"
 print""in name4
 print name4.center(40,'-')
