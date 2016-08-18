@@ -13,11 +13,13 @@ f.close()
 f=file('user.txt')
 a=f.read()
 print "a read is:\n" ,a
+print type(a)
 d='-'
 print d.center(40,'-')
 f=file('user.txt')
 b=f.readline()
 print"b readline() is:\n" ,b
+print type(b)
 f=file('user.txt')
 d='-'
 print d.center(40,'-')
@@ -25,5 +27,6 @@ c=f.readlines()
 d=c[0].split()
 e=c[1].split()
 print"c readlines() is:\n" ,c,d[0],d[1],e[0],e[1]
+print type(c)
 
 
