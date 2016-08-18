@@ -3,7 +3,7 @@
 # Author: Sy106
 import  os
 
-f = file('userinfo.txt','w')
+f = file('user.txt','w')
 #a = file("lock.txt")
 f.write("sy106 123\n")
 f.write('admin admin\n')
