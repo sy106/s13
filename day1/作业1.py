@@ -25,15 +25,17 @@ for i in range(3):
             Auth=Auth.split()
 
             if username==Auth[0] and password==Auth[1]:#username and password are correct
-                print "Wlcome %s login my system!" %username
+                print "Welcome %s login my system!" %username
                 loginOK =True
                 break
-        print loginOK
-        break
+            print "the login status1 is",loginOK
+            break
 
         if loginOK==True:
+            print "the login status2 is",loginOK
             break
-    else:
+
+    else :
         continue
 
 
