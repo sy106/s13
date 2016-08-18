@@ -32,7 +32,7 @@ for i in range(3):
                 print "the login status1 is:",loginOK
                 break
             if username==Auth[0] and password!=Auth[1] :#password is wrong
-                print 'Wrong password!please retry!'
+                print 'Wrong password! please retry!'
                 break
             if username!=Auth[0] :  #username is wrong
 
