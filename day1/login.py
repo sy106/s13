@@ -17,7 +17,7 @@ f=file(account)
 accountName=f.readlines()
 print 'the Auth Names are:',accountName
 
-for i in range(3):
+for i in range(5):
     Login=False
     #read lock name into local file
     username=raw_input('please input your login name:').strip()
@@ -47,7 +47,8 @@ for i in range(3):
                 f.close()
                 print 'Enter 3 times wrong password,the name %s is locked'%username
             if Login is True:break#jump out of for loop
-
+    else:
+        print 'please input the right name ,retry!'
     if  Login is True:
         break#jump out of top for loop
 
