@@ -31,13 +31,14 @@ f.close()
 os.system("more dic.txt")
 
 
-info=dict.keys()
+key1=dict.keys()
+print k,v in dict
 
 print 'the dictionary are:',dict
 print'------------------------------------'
-print 'the key valuse are:',info
+print 'the key valuse are:',key1
 
-for a in range(len(info)):
+for a in range(len(key1)):
     inputKey1 = raw_input("please input your first choose:").strip()
     if dict.has_key(inputKey1):
         inputKey2=raw_input("please input your second choose:").strip()
