@@ -31,16 +31,20 @@ f.close()
 os.system("more dic.txt")
 
 
-# info=dict.keys()
-#
-# print 'the dictionary are:',dict
-# print'------------------------------------'
-# print 'the key valuse are:',info
+info=dict.keys()
+
+print 'the dictionary are:',dict
+print'------------------------------------'
+print 'the key valuse are:',info
+
+for a in range(len(info)):
+    inputKey1 = raw_input("please input your first choose:").strip()
+    if dict.has_key(inputKey1):
+        inputKey2=raw_input("please input your second choose:").strip()
 
 
-# for i in info:
-#     i=info.split()
-#     print i
+
+
 
 
 
