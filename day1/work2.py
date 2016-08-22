@@ -7,21 +7,27 @@ import os
 dict={
 'mobile':{
             'cellphone':
-                            {'xiaomi':'xiaomi5'},
+                            {'xiaomi':'xiaomi5',
+                              'huawei':'rongyao'},
             'interphone':
-                            {'baofeng':'baofeng1'}
+                            {'baofeng':'baofeng1',
+                              'huasuo':'dt210'}
             },
 'computer':{
              'notebook':
-                            {'dell':'dell550'},
+                            {'dell':'dell550',
+                             'apple':'mac1'},
              'PC':
-                            {'samsung':'ot350'}
+                            {'samsung':'ot350',
+                             'micsoft':'m535'}
            },
 'food':{
             'vegetables':
-                            {'tomato':'big_tomato'},
+                            {'tomato':'big_tomato',
+                             'onion':'red_onion'},
             'meat':
-                            {'beef':'little_beef'}
+                            {'beef':'little_beef',
+                             'pork':'black_pork'}
         }
 }
 
@@ -50,7 +56,7 @@ print 'the dictionary are:',dict
 print'------------------------------------'
 print 'the key valuse are:',key1
 
-for a in range(len(key1)):
+while True:
     inputKey1 = raw_input("please input your first choose:").strip()
     if dict.has_key(inputKey1):
         print 'the choose is ', dict[inputKey1].keys()
@@ -59,7 +65,7 @@ for a in range(len(key1)):
             print 'the choose is ', dict[inputKey1][inputKey2].keys()
             inputKey3= raw_input("please input your third choose:").strip()
             if inputKey3 in dict[inputKey1][inputKey2]:
-                print 'the result is ', dict[inputKey1][inputKey2].values()
+                print 'the result is ', dict[inputKey1][inputKey2][inputKey3]
                 break
 
 

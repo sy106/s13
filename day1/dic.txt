@@ -1,21 +1,27 @@
 mobile	
 	cellphone	
+	huawei	rongyao
 	xiaomi	xiaomi5
 
 	interphone	
 	baofeng	baofeng1
+	huasuo	dt210
 
 food	
 	vegetables	
 	tomato	big_tomato
+	onion	red_onion
 
 	meat	
+	pork	black_pork
 	beef	little_beef
 
 computer	
 	PC	
+	micsoft	m535
 	samsung	ot350
 
 	notebook	
 	dell	dell550
+	apple	mac1
 
