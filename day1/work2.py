@@ -31,7 +31,7 @@ dict={
         }
 }
 
-f=file('dic.txt','w')
+f=file('dic.txt','w')#read the dict to file
 for key in dict:
     f.write(key)
     f.write('\t\n')
@@ -56,17 +56,22 @@ print 'the dictionary are:',dict
 print'------------------------------------'
 print 'the key valuse are:',key1
 
-while True:
-    inputKey1 = raw_input("please input your first choose:").strip()
+for i in range(10):#give the user 10 times to choose right
+
+    inputKey1 = raw_input("please input your first choose:").strip()#input the first choose
     if dict.has_key(inputKey1):
         print 'the choose is ', dict[inputKey1].keys()
-        inputKey2=raw_input("please input your second choose:").strip()
+        inputKey2=raw_input("please input your second choose:").strip()#if the first is right ,input the second choose
         if inputKey2 in dict[inputKey1]:
             print 'the choose is ', dict[inputKey1][inputKey2].keys()
-            inputKey3= raw_input("please input your third choose:").strip()
+            inputKey3= raw_input("please input your third choose:").strip()#if the second is right ,input the third choose
             if inputKey3 in dict[inputKey1][inputKey2]:
-                print 'the result is ', dict[inputKey1][inputKey2][inputKey3]
+                print 'the result is ', dict[inputKey1][inputKey2][inputKey3]#if all the choose are right,print the result
                 break
+            else :#if the third choose is wrong,give the user one chance to input the right choose,otherwise ,return to first choose
+                print 'please input the correct choose,if not,you will return to choose the first choose ', dict[inputKey1][inputKey2].keys()
+                inputKey3 = raw_input("please input your third choose:").strip()
+                continue
 
 
 
