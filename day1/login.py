@@ -4,12 +4,12 @@
 
 import os
 
-#write userinfo into local file
-f=file('userinfo.txt','a')
-f.write('sy106 123\n')
-f.write('admin admin\n')
-f.write('alex 123\n')
-f.close()
+# #write userinfo into local file
+# f=file('userinfo.txt','a')
+# f.write('sy106 123\n')
+# f.write('admin admin\n')
+# f.write('alex 123\n')
+# f.close()
 
 #read userinfo
 account='user.txt'

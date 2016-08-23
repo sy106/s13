@@ -1,27 +1,27 @@
-mobile	
-	cellphone	
-	huawei	rongyao
-	xiaomi	xiaomi5
-
-	interphone	
-	baofeng	baofeng1
-	huasuo	dt210
-
-food	
-	vegetables	
-	tomato	big_tomato
-	onion	red_onion
-
-	meat	
-	pork	black_pork
-	beef	little_beef
-
-computer	
-	PC	
-	micsoft	m535
-	samsung	ot350
-
-	notebook	
-	dell	dell550
-	apple	mac1
+dict={
+'mobile':{
+            'cellphone':
+                            {'xiaomi':'xiaomi5',
+                              'huawei':'rongyao'},
+            'interphone':
+                            {'baofeng':'baofeng1',
+                              'huasuo':'dt210'}
+            },
+'computer':{
+             'notebook':
+                            {'dell':'dell550',
+                             'apple':'mac1'},
+             'PC':
+                            {'samsung':'ot350',
+                             'micsoft':'m535'}
+           },
+'food':{
+            'vegetables':
+                            {'tomato':'big_tomato',
+                             'onion':'red_onion'},
+            'meat':
+                            {'beef':'little_beef',
+                             'pork':'black_pork'}
+        }
+}
 

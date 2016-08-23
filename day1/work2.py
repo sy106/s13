@@ -4,52 +4,52 @@
 
 import os
 
-dict={
-'mobile':{
-            'cellphone':
-                            {'xiaomi':'xiaomi5',
-                              'huawei':'rongyao'},
-            'interphone':
-                            {'baofeng':'baofeng1',
-                              'huasuo':'dt210'}
-            },
-'computer':{
-             'notebook':
-                            {'dell':'dell550',
-                             'apple':'mac1'},
-             'PC':
-                            {'samsung':'ot350',
-                             'micsoft':'m535'}
-           },
-'food':{
-            'vegetables':
-                            {'tomato':'big_tomato',
-                             'onion':'red_onion'},
-            'meat':
-                            {'beef':'little_beef',
-                             'pork':'black_pork'}
-        }
-}
+# dict={
+# 'mobile':{
+#             'cellphone':
+#                             {'xiaomi':'xiaomi5',
+#                               'huawei':'rongyao'},
+#             'interphone':
+#                             {'baofeng':'baofeng1',
+#                               'huasuo':'dt210'}
+#             },
+# 'computer':{
+#              'notebook':
+#                             {'dell':'dell550',
+#                              'apple':'mac1'},
+#              'PC':
+#                             {'samsung':'ot350',
+#                              'micsoft':'m535'}
+#            },
+# 'food':{
+#             'vegetables':
+#                             {'tomato':'big_tomato',
+#                              'onion':'red_onion'},
+#             'meat':
+#                             {'beef':'little_beef',
+#                              'pork':'black_pork'}
+#         }
+# }
 
-f=file('dic.txt','w')#read the dict to file
-for key in dict:
-    f.write(key)
-    f.write('\t\n')
-    for key2 in dict[key]:
-        f.write('\t')
-        f.write(key2+'\t\n')
-
-        for key3 in dict[key][key2]:
-            f.write('\t')
-            f.write(key3 + '\t')
-            f.write(''.join(dict[key][key2][key3]))
-            f.write('\n')
-
-        f.write('\n')
-f.close()
+# f=file('dic.txt','w')#read the dict to file
+# for key in dict:
+#     f.write(key)
+#     f.write('\t\n')
+#     for key2 in dict[key]:
+#         f.write('\t')
+#         f.write(key2+'\t\n')
+#
+#         for key3 in dict[key][key2]:
+#             f.write('\t')
+#             f.write(key3 + '\t')
+#             f.write(''.join(dict[key][key2][key3]))
+#             f.write('\n')
+#
+#         f.write('\n')
+# f.close()
 os.system("more dic.txt")
 
-
+line=('')
 key1=dict.keys()
 
 print 'the dictionary are:',dict
