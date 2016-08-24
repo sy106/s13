@@ -12,15 +12,25 @@ welcome_msg = 'Welcome to Sy106 Shopping mall'.center(50,'-')
 print(welcome_msg)
 
 exit_flag = False
-product_list = [
-    ('Iphone',5888),
-    ('Mac Air',8000),
-    ('Mac Pro',9000),
-    ('XiaoMi 2',19.9),
-    ('Coffee',30),
-    ('Tesla',820000),
-    ('Bike',700),
-    ('Cloth',200),]
+product_dict = {
+'car':{
+	    'p_name':['BMW','Audi','Pasate','Tesla Model_3'],
+        'num':[10,10,10,10],
+        'price':[33333,34567,35678,888888]
+	},
+'food':{
+        'p_name':['tomato','cucumber','Carrot','Taro'],
+        'num':[100,100,100,100],
+        'price':[2,3,4,5]
+	},
+'mible':{
+	    'p_name':['xiaomi','huawei','apple','nokia'],
+        'num':[100,100,100,100],
+        'price':[1000,2000,5000,500]
+	}
+
+
+}
 
 shop_car = []
 while  exit_flag is not True:
