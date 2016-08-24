@@ -15,20 +15,26 @@ exit_flag = False
 product_dict = {
 'car':{
 	    'p_name':['BMW','Audi','Pasate','Tesla Model_3'],
-        'num':[10,10,10,10],
+        'p_num':[10,10,10,10],
         'price':[33333,34567,35678,888888]
 	},
 'food':{
         'p_name':['tomato','cucumber','Carrot','Taro'],
-        'num':[100,100,100,100],
+        'p_num':[100,100,100,100],
         'price':[2,3,4,5]
 	},
 'mible':{
 	    'p_name':['xiaomi','huawei','apple','nokia'],
-        'num':[100,100,100,100],
+        'p_num':[100,100,100,100],
         'price':[1000,2000,5000,500]
 	}
 
+}
+#描述性标签
+labels={
+    'p_name':['product name'],
+    'p_num':['product number'],
+    'price':['product price']
 }
 
 user_list=[['admin',123],['sy106',234],['leo',456]]
@@ -39,11 +45,12 @@ while  exit_flag is not True:
     #for product_item in product_list:
     #    p_name,p_price = product_item
     print("product list".center(50,'-'))
-    for item in enumerate(product_list):
-        index = item[0]
-        p_name = item[1][0]
-        p_price = item[1][1]
-        print(index,'.',p_name,p_price)
+    for item in enumerate(product_dict):
+        index = item[0]+1
+        p_name = labels[p_name]
+        p_num=labels[p_num]
+        p_price = labels[price]
+        print(index,'.',p_name,p_num,p_price)
 
     user_choice = input("[q=quit,c=check]What do you want to buy?:")
     if user_choice.isdigit():#鑲畾鏄€夋嫨shangpin
@@ -56,7 +63,18 @@ while  exit_flag is not True:
                 print("Added [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
                       (p_item,salary))
             else:
-                print("Your balance is [%s],cannot afford this.." % salary)
+                print("Your balance is [%s],cannot afford this，do your want to recharge?" % salary)
+                recharge_lable=input("[y or n?]:")
+                if recharge_lable=='y':
+                    recharge = input("Input your recharge:")
+                    if recharge.isdigit():
+                        recharge = int(recharge)
+                        salary=salary+recharge
+                        print("Now you recharge is %d,and your salary is %d"%(recharge,salary))
+                    else:
+                        exit("Invaild data type...")
+
+
     else:
         if user_choice == 'q' or user_choice =='quit':
             print("purchased products as below".center(40,'*'))
