@@ -147,6 +147,3 @@ alex 123
 sy106 123
 admin admin
 alex 123
-sy106 123
-admin admin
-alex 123

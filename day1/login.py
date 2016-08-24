@@ -33,7 +33,7 @@ for i in range(5):
         print'The user %s has been lock!please use another username!'%username
         break
     for line in accountName:
-        line=line.split()
+        line=line.split(' ')
         if username==line[0]:#if the name is right ,input the passwd
             for i in range(3):
                 passwd = raw_input('please input your password:').strip()
