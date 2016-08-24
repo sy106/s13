@@ -29,8 +29,10 @@ product_dict = {
         'price':[1000,2000,5000,500]
 	}
 
-
 }
+
+user_list=[['admin',123],['sy106',234],['leo',456]]
+
 
 shop_car = []
 while  exit_flag is not True:
