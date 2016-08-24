@@ -47,7 +47,7 @@ while  exit_flag is not True:
     print("product list".center(50,'-'))
     for item in enumerate(product_dict):
         index = item[0]+1
-        p_name = labels[p_name]
+        p_name = labels[p_name][0]
         p_num=labels[p_num]
         p_price = labels[price]
         print(index,'.',p_name,p_num,p_price)
