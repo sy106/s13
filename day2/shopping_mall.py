@@ -48,8 +48,7 @@ for buy_time in range(10)  :
                 usr_msg="""
                 username:   %s
                 password:   %s
-                salary:     %d
-                """
+                salary:     %d """
                 print(usr_msg%(username,passwd,salary))
                 user_info=[username,passwd,salary]
                 print(user_info)
