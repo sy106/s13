@@ -53,7 +53,6 @@ for buy_time in range(10)  :
                 print(usr_msg%(username,passwd,salary))
                 user_info=[username,passwd,salary]
                 print(user_info)
-
                 exit_flag = False
                 while exit_flag is False:
                     # for product_item in product_list:
