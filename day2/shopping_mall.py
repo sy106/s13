@@ -55,7 +55,6 @@ for buy_time in range(10)  :
                 print(user_info)
 
                 exit_flag = False
-
                 while exit_flag is False:
                     # for product_item in product_list:
                     #    p_name,p_price = product_item
