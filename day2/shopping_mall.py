@@ -29,7 +29,7 @@ shop_car = []
 buy_time=0
 
 for buy_time in range(10)  :
-    username=input('please input your login name:').strip()
+    username=input('please input your login name[q=quit]:').strip()
     for line in user_list:
         if username==line[0]:#if the name is right ,input the passwd
             passwd = input('please input your password:').strip()
@@ -70,19 +70,25 @@ for buy_time in range(10)  :
                     if user_choice1.isdigit():  # 肯定是选择shangpin
                         user_choice1 = int(user_choice1)
                         if user_choice1 <= len(product_list):
+                            title="""index   p_name       p_price    p_number"""
+                            print(title)
                             for item in enumerate(product_list[user_choice1 - 1][1]):  # print the second product list
                                 index = item[0] + 1
                                 p_list = item[1][0]
-                                print(index, '.', p_list)
+                                p_price=item[1][1]
+                                p_num=item[1][2]
+                                list_msg = """%s.      %s        %s        %s"""
+                                print(list_msg % (index, p_list, p_price, p_num))
                             user_choice2 = input("Which one do you want to buy?(must be digit)")
                             if user_choice2.isdigit():  # 肯定是选择shangpin
                                 user_choice2 = int(user_choice2)
                                 p_item = product_list[user_choice1 - 1][1][user_choice2 - 1]
+                                print("test pitem",p_item)
                                 choose_num=user_choice2 = input("How many do you want to buy?(must be digit)")
                                 if choose_num.isdigit():
                                     choose_num = int(choose_num)
                                     if int(p_item[1]) <= salary:  # 买的起
-                                        shop_car.append(p_item[0])  # 放入购物车
+                                        shop_car.append([p_item[0],p_item[1],choose_num])  # 放入购物车
                                         salary -= p_item[1] * choose_num # 减钱
                                         print("Added [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
                                               (p_item[0], salary))
@@ -103,8 +109,15 @@ for buy_time in range(10)  :
                     else:
                         if user_choice1 == 'q' or user_choice1 == 'quit':
                             print("purchased products as below".center(40, '*'))
-                            for item in shop_car:
-                                print(item)
+                            title = """index   p_name       p_price    p_number"""
+                            print(title)
+                            for item in enumerate(shop_car):
+                                index = item[0] + 1
+                                p_name = item[1][0]
+                                p_price = item[1][1]
+                                p_num = item[1][2]
+                                list_msg = """%s.      %s        %s        %s"""
+                                print(list_msg % (index, p_name, p_price, p_num))
                             print("END".center(40, '*'))
                             print("Your balance is [%s]" % salary)
                             print("Bye")
@@ -112,8 +125,15 @@ for buy_time in range(10)  :
                             break
                         elif user_choice1 == 'c' or user_choice1 == 'check':
                             print("purchased products as below".center(40, '*'))
-                            for item in shop_car:
-                                print(item)
+                            title = """index   p_name       p_price    p_number"""
+                            print(title)
+                            for item in enumerate(shop_car):
+                                index = item[0] + 1
+                                p_name = item[1][0]
+                                p_price = item[1][1]
+                                p_num = item[1][2]
+                                list_msg = """%s.      %s        %s        %s"""
+                                print(list_msg % (index, p_name, p_price, p_num))
                             print("END".center(40, '*'))
                             print("Your balance is \033[41;1m[%s]\033[0m" % salary)
 
