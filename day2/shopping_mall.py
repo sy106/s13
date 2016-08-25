@@ -135,7 +135,6 @@ for buy_time in range(10)  :
                             print("Your balance is \033[41;1m[%s]\033[0m" % salary)
 
 
-
             else:
                 print('please input the right passwd ,retry!')
         elif username == 'q' or username == 'quit':#allow user quit
