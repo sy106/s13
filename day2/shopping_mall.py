@@ -138,7 +138,6 @@ for buy_time in range(10)  :
 
             else:
                 print('please input the right passwd ,retry!')
-
         elif username == 'q' or username == 'quit':#allow user quit
             exit("Bye!")
 
