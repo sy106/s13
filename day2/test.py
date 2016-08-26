@@ -25,24 +25,7 @@ print(product_list[2][1][3])
 
 
 
-# # p_list = []
-# user_choice1= input("[q=quit,c=check]Which kind do you want to buy?(must be digit)")
-# user_choice1 = int(user_choice1)
-# print(product_list[user_choice1-1])
-# for item in enumerate(product_list[user_choice1-1][1]):
-#     index = item[0] + 1
-#     p_list = item[1][0]
-#     print(index, '.', p_list)
-#
-#     # user_choice2 = input("[q=quit,c=check]Which kind do you want to buy?(must be digit)")
-#     # user_choice2= int(user_choice1)
-#     # for item2 in enumerate(p_list):
-#     #     index2 = item2[0] + 1
-#     #     p_name = item2[1][0]
-#     #     # p_price = item2[1][1]
-#     #     # p_num = item2[1][2]
-#     #
-#     #     print(index2, '.', p_name)
+
 
 
 
