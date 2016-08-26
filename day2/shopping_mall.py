@@ -53,6 +53,7 @@ for buy_time in range(10)  :
         else:
             break
     print(record)
+
     f.close()
     # set(record_list)
     # print(record_list,record_name,record_salary)
