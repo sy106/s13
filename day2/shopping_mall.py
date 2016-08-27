@@ -2,7 +2,8 @@
 # -*- coding:utf-8 -*-
 # Author:Author: Sy106
 
-
+import os
+import json
 
 product_list =[
 ['car', [
@@ -27,22 +28,65 @@ product_list =[
 user_list=[['admin','123'],['sy106','234'],['leo','456']]
 shop_car = []
 buy_time=0
+salary=0
+
 
 for buy_time in range(10)  :
     username=input('please input your login name[q=quit]:').strip()
+    new_list = [username, shop_car, salary]
+    print (new_list)
+
+    hisory= 'record_list.txt'#从购物历史中读取购物清单
+    f = open(hisory)
+    record_list=[]
+    record_name = []
+    name_list=[]
+    record_salary=[]
+
+    for record in f.readlines():
+        if record !=[]:
+            record = record.strip().split()
+            print('test',record)
+            record_list.append(record[3])
+            record_name.append(record[1])
+            record_salary.append(record[4])
+        else:
+            break
+    print(record)
+
+    f.close()
+    # set(record_list)
+    # print(record_list,record_name,record_salary)
+
     for line in user_list:
         if username==line[0]:#if the name is right ,input the passwd
             passwd = input('please input your password:').strip()
             if passwd == line[1]:
                 print("Welcome %s login the system!" % username)  # login success
+                if username in record_name:
+                    salary=record_list[username]
+                else:
+                    salary = input("Input your salary:")
+                    if salary.isdigit():
+                        salary = int(salary)
+                    else:
+                        exit("Invaild data type...")
+
                 Login = True
 
-                salary = input("Input your salary:")
-                if salary.isdigit():
-                    salary = int(salary)
-                else:
-                    exit("Invaild data type...")
 
+                if username == 'sy106' and salary == 0:
+                    salary = input("Input your salary:")
+                    if salary.isdigit():
+                        salary = int(salary)
+                    else:
+                        exit("Invaild data type...")
+                if username == 'leo' and salary == 0:
+                    salary = input("Input your salary:")
+                    if salary.isdigit():
+                        salary = int(salary)
+                    else:
+                        exit("Invaild data type...")
                 welcome_msg = 'Welcome to Sy106 Shopping mall'.center(50, '-')
                 print(welcome_msg)
                 usr_msg="""
@@ -55,7 +99,8 @@ for buy_time in range(10)  :
                 exit_flag = False
                 while exit_flag is False:
                     # for product_item in product_list:
-                    #    p_name,p_price = product_item
+                    #    p_name,p_price ,p_num= product_item
+
                     print("product list".center(50, '-'))
                     for item in enumerate(product_list):
                         index = item[0] + 1
@@ -86,7 +131,21 @@ for buy_time in range(10)  :
                                     choose_num = int(choose_num)
                                     if int(p_item[1]) <= salary:  # 买的起
                                         shop_car.append([p_item[0],p_item[1],choose_num])  # 放入购物车
-                                        salary -= p_item[1] * choose_num # 减钱
+                                        salary -= p_item[1] * choose_num  # 减钱
+                                        record_list = [username, shop_car, salary]
+                                        print(record_list)
+                                        f = open(hisory, 'a')
+                                        for line in record_list:
+                                            d1=json.dumps(line)
+                                            f.write(d1)
+                                            f.write(' ')
+                                            # f.write(repr(line))
+                                            # f.write(' ')
+
+                                        f.write('\n')
+                                        f.close()
+
+
                                         print("Added [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
                                               (p_item[0], salary))
                                     else:
@@ -105,7 +164,7 @@ for buy_time in range(10)  :
 
                     else:
                         if user_choice1 == 'q' or user_choice1 == 'quit':
-                            print("purchased products as below".center(40, '*'))
+                            print("%s purchased products as below".center(40, '*') % username)
                             title = """index   p_name       p_price    p_number"""
                             print(title)
                             for item in enumerate(shop_car):
@@ -118,10 +177,13 @@ for buy_time in range(10)  :
                             print("END".center(40, '*'))
                             print("Your balance is [%s]" % salary)
                             print("Bye")
+
+                            # record_list=[]
+
                             exit_flag = True
                             break
                         elif user_choice1 == 'c' or user_choice1 == 'check':
-                            print("purchased products as below".center(40, '*'))
+                            print("%s purchased products as below".center(40, '*')%username)
                             title = """index   p_name       p_price    p_number"""
                             print(title)
                             for item in enumerate(shop_car):
