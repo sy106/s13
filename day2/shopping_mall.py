@@ -43,16 +43,16 @@ for buy_time in range(10)  :
     name_list=[]
     record_salary=[]
 
-    for record in f.readlines():
-        if record !=[]:
-            record = record.strip().split()
-            print('test',record)
-            record_list.append(record[3])
-            record_name.append(record[1])
-            record_salary.append(record[4])
-        else:
-            break
-    print(record)
+    # for record in f.readlines():
+    #     if record !=[]:
+    #         record = record.strip().split()
+    #         print('test',record)
+    #         record_list.append(record[3])
+    #         record_name.append(record[1])
+    #         record_salary.append(record[4])
+    #     else:
+    #         break
+    # print(record)
 
     f.close()
     # set(record_list)
@@ -129,21 +129,47 @@ for buy_time in range(10)  :
                                 choose_num=user_choice2 = input("How many do you want to buy?(must be digit)")
                                 if choose_num.isdigit():
                                     choose_num = int(choose_num)
+
                                     if int(p_item[1]) <= salary:  # 买的起
-                                        shop_car.append([p_item[0],p_item[1],choose_num])  # 放入购物车
-                                        salary -= p_item[1] * choose_num  # 减钱
-                                        record_list = [username, shop_car, salary]
-                                        print(record_list)
-                                        f = open(hisory, 'a')
-                                        for line in record_list:
-                                            d1=json.dumps(line)
-                                            f.write(d1)
-                                            f.write(' ')
+                                        salary -= p_item[1] * choose_num  # 余额
+                                        if shop_car!=[]:
+                                            # for list in shop_car:
+                                            #     if p_item[0] in shop_car:
+                                            #         # location=list.index(p_item[0])
+                                            #         shop_car.remove(list)
+                                            #         choose_num+=list[2]
+                                            #         shop_car.append([p_item[0], p_item[1], choose_num])
+                                            #     else:
+                                            #         shop_car.append([p_item[0], p_item[1], choose_num])
+                                            if p_item[0] in shop_car:
+                                                for list in shop_car:
+                                                    if list[0]==p_item[0]:
+                                                        shop_car.remove(list)
+                                                        choose_num += list[2]
+                                                        shop_car.append([p_item[0], p_item[1], choose_num]) 
+                                        else:
+                                            shop_car.append([p_item[0], p_item[1], choose_num])  # 放入购物车,名称，价格，数量
+                                        # shop_car.append([p_item[0], p_item[1], choose_num])
+                                        print('test shopcar:', shop_car)
+                                        record_list = [username, shop_car, salary]#为用户该次购物信息
+                                        print("test user info:",record_list)
+
+                                        f = open(hisory, 'r+')#history里面记录用户购物历史清单
+                                        for user in f.readlines():
+                                            print('test user:',user)
+                                            if username == user[0]:
+                                                print("the same user login")
+                                        f.write('\n')
+                                        f.close()
+
+                                        # for data in record_list:
+                                        #     f.writelines(str(data))
+
+
                                             # f.write(repr(line))
                                             # f.write(' ')
 
-                                        f.write('\n')
-                                        f.close()
+
 
 
                                         print("Added [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
