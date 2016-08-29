@@ -68,7 +68,7 @@ while True:
                                         old_shop_list = old_shop_list.strip(']')  # 去掉前后的[]
                                         old_shop_list = old_shop_list.strip('[')
                                         old_shop_list = old_shop_list.split('], [')  # 根据],[把购物车信息取出来
-                                        print("last shop car product are:")
+                                        print("last shop car product are:",old_shop_list)
                                         title = """index   p_name      p_number"""
                                         print(title)
                                         for item in enumerate(old_shop_list):
