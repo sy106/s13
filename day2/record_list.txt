@@ -1,2 +1,5 @@
-leo xiaomi,2;tomato,4 123
-admin tomato,12 12345
+leo [[xiaomi,2],[tomato,4],[nokia5,4]] 123
+admin [[tomato,12]] 12345
+admin [['cucumber', 1]] 12343
+admin [['Carrot', 23], ['nokia3', 1]] 11677
+admin [['cucumber', 4], ['nokia3', 2]] 11139

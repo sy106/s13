@@ -49,7 +49,7 @@ while True:
             userName = inputedName
             for line in user_list:
                 if userName == line[0]:  # if the name is right ,input the passwd
-                    for passwd_retry_time in range(3):
+                    for passwd_retry_time in range(len(user_list)):
                         passwd = input('please input your password:').strip()
                         if passwd == line[1]:
                             print("Welcome %s login the system!" % userName)  # login success
@@ -64,9 +64,19 @@ while True:
                                         print("welcome %s login again!"%userName)
                                         salary = int(record_line[2])
                                         old_shop_list=record_line[1]
-                                        # for shop_item in old_shop_list:#print last time buyed list
-                                        #     shop_item
 
+                                        old_shop_list = old_shop_list.strip(']')  # 去掉前后的[]
+                                        old_shop_list = old_shop_list.strip('[')
+                                        old_shop_list = old_shop_list.split('],[')  # 根据],[把购物车信息取出来
+                                        print("last shop car product are:")
+                                        title = """index   p_name      p_number"""
+                                        print(title)
+                                        for item in enumerate(old_shop_list):
+                                            index = item[0] + 1
+                                            p_name = item[1].split(',')[0]
+                                            p_num = item[1].split(',')[1]
+                                            list_msg = """%s.      %s        %s"""
+                                            print(list_msg % (index, p_name, p_num))
                                         break
                             else:
                                 salary = input("Input your salary:")
@@ -135,18 +145,20 @@ while True:
                             if int(p_item[1]) <= salary:  # 买的起
                                 salary -= p_item[1] * choose_num  # 余额
                                 if shop_car != []:#prepare add buy  produc into shop_car
-                                    if p_item[0] in shop_car:
-                                        for list in shop_car:
-                                            if list[0] == p_item[0]:
-                                                shop_car.remove(list)
-                                                choose_num += list[1]
-                                                shop_car.append([p_item[0],choose_num])  # 放入购物车,名称，数量
+                                    for element in shop_car:
+                                        if p_item[0] ==element[0]:
+                                            shop_car.remove(element)
+                                            choose_num += element[1]
+                                            shop_car.append([p_item[0],choose_num])  # 放入购物车,名称，数量
+                                            break
+                                    else:
+                                        shop_car.append([p_item[0], choose_num])  # 放入购物车,名称，数量
 
                                 else:
-                                    shop_car.append([p_item[0], choose_num])# 放入购物车,名称，数量
+                                     shop_car.append([p_item[0], choose_num])# 放入购物车,名称，数量
 
-                                print("Added [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
-                                      (p_item[0], salary))
+                                print("Added[%d] [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
+                                      (choose_num,p_item[0], salary))
                             else:
                                 print("Your balance is [%s],cannot afford this，do your want to recharge?" % salary)
                                 recharge_lable = input("[y or n?]:")  # 提醒用户是否需要充值
@@ -175,7 +187,8 @@ while True:
                 print(list_msg % (index, p_name,p_num))
             print("END".center(40, '*'))
             print("Your balance is \033[41;1m[%s]\033[0m" % salary)
-            continue
+            state = LOGINED
+
     elif state == QUITING:
         #do someting for quit, save the carting and account information
             print("%s purchased products as below".center(40, '*') % userName)
@@ -189,6 +202,14 @@ while True:
                 print(list_msg % (index, p_name,p_num))
             print("END".center(40, '*'))
             print("Your balance is [%s]" % salary)
+
+            #将购物车的内容，写入文件里
+            write_shop=open('record_list.txt', 'a+')
+            write_shop.write('%s %s %s\n' % (userName,shop_car,salary))
+            write_shop.close()
+
+
+
             exit("Bye!")
     else:
         break

@@ -154,7 +154,7 @@ for buy_time in range(10)  :
                                         record_list = [username, shop_car, salary]#为用户该次购物信息
                                         print("test user info:",record_list)
 
-                                        f = open(hisory, 'r+')#history里面记录用户购物历史清单
+                                        f = open(hisory, 'a+')#history里面记录用户购物历史清单
                                         for user in f.readlines():
                                             print('test user:',user)
                                             if username == user[0]:
