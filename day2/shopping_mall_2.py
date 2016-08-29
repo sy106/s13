@@ -59,7 +59,7 @@ while True:
                             #init here, read the salary, carton and other item information
 
                             for record_line in record.readlines():
-                                record_line = record_line.split()
+                                record_line = record_line.split(';')
                                 if userName==record_line[0]:
                                         print("welcome %s login again!"%userName)
                                         salary = int(record_line[2])
@@ -67,14 +67,14 @@ while True:
 
                                         old_shop_list = old_shop_list.strip(']')  # 去掉前后的[]
                                         old_shop_list = old_shop_list.strip('[')
-                                        old_shop_list = old_shop_list.split('],[')  # 根据],[把购物车信息取出来
+                                        old_shop_list = old_shop_list.split('], [')  # 根据],[把购物车信息取出来
                                         print("last shop car product are:")
                                         title = """index   p_name      p_number"""
                                         print(title)
                                         for item in enumerate(old_shop_list):
                                             index = item[0] + 1
-                                            p_name = item[1].split(',')[0]
-                                            p_num = item[1].split(',')[1]
+                                            p_name = item[1].split(', ')[0]
+                                            p_num = item[1].split(', ')[1]
                                             list_msg = """%s.      %s        %s"""
                                             print(list_msg % (index, p_name, p_num))
                                         break
@@ -152,10 +152,10 @@ while True:
                                             shop_car.append([p_item[0],choose_num])  # 放入购物车,名称，数量
                                             break
                                     else:
-                                        shop_car.append([p_item[0], choose_num])  # 放入购物车,名称，数量
+                                        shop_car.append([p_item[0],choose_num])  # 放入购物车,名称，数量
 
                                 else:
-                                     shop_car.append([p_item[0], choose_num])# 放入购物车,名称，数量
+                                     shop_car.append([p_item[0],choose_num])# 放入购物车,名称，数量
 
                                 print("Added[%d] [%s] into shop car,you current balance is \033[31;1m[%s]\033[0m" %
                                       (choose_num,p_item[0], salary))
@@ -205,7 +205,7 @@ while True:
 
             #将购物车的内容，写入文件里
             write_shop=open('record_list.txt', 'a+')
-            write_shop.write('%s %s %s\n' % (userName,shop_car,salary))
+            write_shop.write('%s;%s;%s\n' % (userName,shop_car,salary))
             write_shop.close()
 
             exit("Bye!")
