@@ -208,8 +208,6 @@ while True:
             write_shop.write('%s %s %s\n' % (userName,shop_car,salary))
             write_shop.close()
 
-
-
             exit("Bye!")
     else:
         break
