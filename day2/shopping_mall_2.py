@@ -59,7 +59,7 @@ while True:
                             #init here, read the salary, carton and other item information
 
                             for record_line in record.readlines():
-                                record_line = record_line.split()
+                                record_line = record_line.split(';')
                                 if userName==record_line[0]:
                                         print("welcome %s login again!"%userName)
                                         salary = int(record_line[2])
@@ -67,7 +67,7 @@ while True:
 
                                         old_shop_list = old_shop_list.strip(']')  # 去掉前后的[]
                                         old_shop_list = old_shop_list.strip('[')
-                                        old_shop_list = old_shop_list.split('],[')  # 根据],[把购物车信息取出来
+                                        old_shop_list = old_shop_list.split('], [')  # 根据],[把购物车信息取出来
                                         print("last shop car product are:")
                                         title = """index   p_name      p_number"""
                                         print(title)
@@ -205,7 +205,7 @@ while True:
 
             #将购物车的内容，写入文件里
             write_shop=open('record_list.txt', 'a+')
-            write_shop.write('%s %s %s\n' % (userName,shop_car,salary))
+            write_shop.write('%s;%s;%s\n' % (userName,shop_car,salary))
             write_shop.close()
 
             exit("Bye!")
