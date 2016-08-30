@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # Author:Author: Sy106
+import time
+
+now = time.strftime("%Y-%m-%d %H:%M:%S")
 
 product_list =[
 ['car', [
@@ -35,6 +38,8 @@ user_list=[['admin','123'],['sy106','234'],['leo','456']]
 userName = ''
 balance = -1
 shop_car=[]
+old_shop_list=[]
+
 record= open('record_list.txt')
 
 while True:
@@ -62,13 +67,13 @@ while True:
                                 record_line = record_line.split(';')
                                 if userName==record_line[0]:
                                         print("welcome %s login again!"%userName)
-                                        salary = int(record_line[2])
+                                        salary = float(record_line[2])
                                         old_shop_list=record_line[1]
 
                                         old_shop_list = old_shop_list.strip(']')  # 去掉前后的[]
                                         old_shop_list = old_shop_list.strip('[')
                                         old_shop_list = old_shop_list.split('], [')  # 根据],[把购物车信息取出来
-                                        print("last shop car product are:")
+                                        print("last shop car product are:",old_shop_list)
                                         title = """index   p_name      p_number"""
                                         print(title)
                                         for item in enumerate(old_shop_list):
@@ -87,7 +92,7 @@ while True:
                             usr_msg = """
                                             username:   %s
                                             password:   %s
-                                            salary:     %d """
+                                            salary:     %f """
                             print(usr_msg % (userName, passwd, salary))
                             state = LOGINED
                             break
@@ -192,6 +197,7 @@ while True:
     elif state == QUITING:
         #do someting for quit, save the carting and account information
             print("%s purchased products as below".center(40, '*') % userName)
+            print("now shop car is:",shop_car)
             title = """index   p_name     p_number"""
             print(title)
             for item in enumerate(shop_car):
@@ -202,10 +208,22 @@ while True:
                 print(list_msg % (index, p_name,p_num))
             print("END".center(40, '*'))
             print("Your balance is [%s]" % salary)
-
+            #将前后的购物车内容进行比对，如果有相同的内容就合并数量
+            for last1 in old_shop_list:
+                last1 = last1.split('"')
+                last2 = last1[0].split(', ')
+                long = len(shop_car)
+                for i in range(long):
+                    p_name = shop_car[i][0]
+                    if p_name in last2[0]:
+                        # print("yes!")
+                        shop_car[i][1]+=int(last2[1])
+                    elif p_name not in last2[0]:
+                        shop_car.append([last2[0][1:-1], last2[1]])
+                    break
             #将购物车的内容，写入文件里
             write_shop=open('record_list.txt', 'a+')
-            write_shop.write('%s;%s;%s\n' % (userName,shop_car,salary))
+            write_shop.write('%s;%s;%s;%s\n' % (userName,shop_car,salary,now))
             write_shop.close()
 
             exit("Bye!")
