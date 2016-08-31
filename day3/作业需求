@@ -11,3 +11,5 @@ HAproxy配置文件操作
 5. 操作配置文件前进行备份
 
 6 添加server信息时，如果ip已经存在则修改;如果backend不存在则创建；若信息与已有信息重复则不操作
+
+http://www.cnblogs.com/wupeiqi/articles/5433893.html
