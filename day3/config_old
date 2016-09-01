@@ -31,6 +31,6 @@ backend www.oldboy.org
 backend buy.oldboy.org
         server 100.1.7.90 100.1.7.90 weight 20 maxconn 3000
 
-原配置文件如下
+原配置文件如下:
 
 现有ha配置文件
