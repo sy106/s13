@@ -5,11 +5,13 @@
 num = input('请输入操作序号:')
 
 if num== 1:
-    read = input('请输入backend:')     如输入:www.oldboy.org
-    讲配置文件 backend www.oldboy.org 节点下的所有记录获取到，并输入到终端
+    read = input('请输入backend:')
+    # 如输入:www.oldboy.org
+    # 讲配置文件 backend www.oldboy.org 节点下的所有记录获取到，并输入到终端
 
 elif num== 2:
-    read = input('请输入要新加的记录:') 如: {"backend": "test.oldboy.org","record":{"server": "100.1.7.9","weight": 20,"maxconn": 30}}
+    read = input('请输入要新加的记录:')
+    # 如: {"backend": "test.oldboy.org","record":{"server": "100.1.7.9","weight": 20,"maxconn": 30}}
     # 讲read字符串转换成 字典类型
     read_dict = json.loads(read)
 

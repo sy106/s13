@@ -1,0 +1,27 @@
+#!user/bin/env python
+#-*-coding:utf-8 -*-
+# Author: Sy106
+
+
+def user_input():
+    num=input("please input the number[1:get the info or 2:add the info or 3:delete the info]:").strip()
+    if num=='1':
+        read = input('pls input the backend:')
+        with open('config_old', 'r+', encoding="utf-8") as f1, open("config_new", 'w+', encoding="utf-8") as f2:
+            for line in f1:
+                if line.strip() == 'backend'+' '+read:
+                    print("yes!")
+
+        pass
+    elif num=='2':
+        read = input('pls input the add record:')
+        pass
+    elif num=='3':
+        printread = input('pls input the delete record:')
+        pass
+    else:
+        print("please input the auth number!")
+        exit("Bye!")
+
+while True:
+ user_input()
