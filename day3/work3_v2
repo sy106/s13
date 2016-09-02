@@ -1,7 +1,17 @@
 #!user/bin/env python
 #-*-coding:utf-8 -*-
 # Author: Sy106
-import json
+import json,os.path, time,shutil
+
+
+list_str=[]
+
+def backupFile():
+    with open('config_old', 'r', encoding="utf-8") as f1, open("config_old_back", 'w', encoding="utf-8") as f2:
+        list=f1.read()
+        f2.writelines(list)
+
+
 
 def user_input():
     num=input("please input the number[1:get the info or 2:add the info or 3:delete the info]:[q=quit]:").strip()
@@ -9,26 +19,92 @@ def user_input():
         read = input('pls input the backend:')
         with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w', encoding="utf-8") as f2:
             for line in f1:
+                f2.write(line)
                 if line.strip() == 'backend'+' '+read:#如果匹配到输入的内容，就输出标题下的内容
                   list=f1.readlines()
+                  f2.writelines(list)
                   index=list.index('\n')#将空行前的内容输出
                   for i in range(index):
                       print(list[i].strip())
         pass
     elif num=='2':
         read = input('pls input the add record:')
+        # 如: {"backend": "test.oldboy.org","record":{"server": "100.1.7.9","weight": 20,"maxconn": 30}}
         read_dict = json.loads(read)
-        print(read_dict)
 
-        pass
+        # 讲read字符串转换成 字典类型
+        backend_title = read_dict['backend']#backend 下的值
+        record_dict=read_dict['record']
+        server=record_dict['server']
+        weight=str(record_dict['weight'])
+        maxconn=record_dict['maxconn']
+        msg="""server %s %s weight %s maxconn %s"""
+
+        with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w+', encoding="utf-8") as f2:
+            for line in f1:
+                if line.strip() =='backend'+' '+backend_title :
+                     # 如果匹配到输入的内容，就新增输出标题下的内容
+                    f2.write(line)
+                    list=f1.readlines()
+                    location=list.index('\n')
+                    f2.writelines(list[0:location])
+                    f2.write('        ')
+                    f2.write(msg % (server,sever, weight, maxconn))
+                    f2.writelines('\n')
+                    f2.writelines('\n')
+                    f2.writelines(list[location:])
+                    break
+
+                elif line.strip()!='backend'+' '+backend_title:#如果没有匹配到，就继续边读边写
+                    f2.write(line)
+            else:#如果是不重复的内容，就直接在文件后添加
+                f2.write('backend' + ' ' + backend_title+'\n')
+                f2.write('        ')
+                f2.write(msg%(server,weight,maxconn))
+                f2.write('\n')
+
     elif num=='3':
-        printread = input('pls input the delete record:')
-        pass
+        read = input('pls input the delete record:')
+        # 输入要删除的记录
+        # 如: {"backend": "www.oldboy.org","record":{"server": "100.1.7.9","weight": 20,"maxconn": 300}}
+        read_dict = json.loads(read)
+        backend_title = read_dict['backend']  # backend 下的值
+        record_dict = read_dict['record']
+        server = record_dict['server']
+        weight = str(record_dict['weight'])
+        maxconn = record_dict['maxconn']
+        msg = """server %s %s weight %s maxconn %s"""
+        with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w+', encoding="utf-8") as f2:
+            lable = False
+            for line in f1:
+                if line.strip() == 'backend' + ' ' + backend_title:  # 如果找到删除的记录,就不写到新文件里
+                    f2.write(line)
+                    lable = True
+                    list = f1.readlines()
+                    test_str = msg % (server, server, weight, maxconn)
+                    for i in list:
+                        if i.strip() == test_str:
+                            index = list.index(i)
+                            f2.writelines(list[0:index])
+                            f2.writelines(list[index + 1:])
+                            break
+                        else:
+                            continue
+                else:
+                    if lable == True:
+                        continue
+                    else:
+                        f2.write(line)
+
     elif num=='q'or num=='quit':
         exit("Bye!")
     else:
         print("please input the auth number!")
         exit("Bye!")
 
+
+
+
+backupFile()
 while True:
- user_input()
+    user_input()

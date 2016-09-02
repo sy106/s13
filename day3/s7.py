@@ -3,4 +3,6 @@
 # Author:Alex Li
 
 f = open("config_old","r+", encoding="utf-8")
-print(f.read())
+list=f.readlines()
+num=list.index('backend www.oldboy.org\n')
+print(f.readline(num))
