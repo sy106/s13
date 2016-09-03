@@ -6,12 +6,10 @@ import json,os.path, time,shutil
 
 list_str=[]
 
-def backupFile():
+def backupFile():#备份文件
     with open('config_old', 'r', encoding="utf-8") as f1, open("config_old_back", 'w', encoding="utf-8") as f2:
         list=f1.read()
         f2.writelines(list)
-
-
 
 def user_input():
     num=input("please input the number[1:get the info or 2:add the info or 3:delete the info]:[q=quit]:").strip()
@@ -26,9 +24,8 @@ def user_input():
                   index=list.index('\n')#将空行前的内容输出
                   for i in range(index):
                       print(list[i].strip())
-        pass
     elif num=='2':
-        read = input('pls input the add record:')
+        read = input('pls input the add record:')#输入要增加的内容
         # 如: {"backend": "test.oldboy.org","record":{"server": "100.1.7.9","weight": 20,"maxconn": 30}}
         read_dict = json.loads(read)
 
@@ -43,24 +40,32 @@ def user_input():
         with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w+', encoding="utf-8") as f2:
             for line in f1:
                 if line.strip() =='backend'+' '+backend_title :
-                     # 如果匹配到输入的内容，就新增输出标题下的内容
+                     # 如果匹配到输入的标题，就新增输出标题下的内容，如果内容重复就不添加
                     f2.write(line)
                     list=f1.readlines()
-                    location=list.index('\n')
-                    f2.writelines(list[0:location])
-                    f2.write('        ')
-                    f2.write(msg % (server,sever, weight, maxconn))
-                    f2.writelines('\n')
-                    f2.writelines('\n')
-                    f2.writelines(list[location:])
+                    target_str = msg % (server, server, weight, maxconn)
+                    for i in list:
+                         if i.strip() == target_str:  # 如果有与添加内容相同项，就不写入新文件
+                             f2.writelines(list)
+                             print("the item %s  already existed!" % target_str)
+                             break
+                         else:#如果与添加内容不同，就执行下一步写入新文件
+                             continue
+                    else:
+                         location = list.index('\n')#找到项目内容的末尾
+                         f2.writelines(list[0:location])#先将原始文件内容写入
+                         f2.write('        ')
+                         f2.write(target_str)#再写入新添加的内容
+                         f2.writelines('\n')#写入2个空行
+                         f2.writelines('\n')
+                         f2.writelines(list[location:])#再写入剩下的内容
                     break
-
-                elif line.strip()!='backend'+' '+backend_title:#如果没有匹配到，就继续边读边写
+                elif line.strip()!='backend'+' '+backend_title:#如果没有匹配到，就继续边读边写，将原始文件内容复制到新文件
                     f2.write(line)
             else:#如果是不重复的内容，就直接在文件后添加
                 f2.write('backend' + ' ' + backend_title+'\n')
                 f2.write('        ')
-                f2.write(msg%(server,weight,maxconn))
+                f2.write(msg%(server,server,weight,maxconn))
                 f2.write('\n')
 
     elif num=='3':
@@ -74,35 +79,32 @@ def user_input():
         weight = str(record_dict['weight'])
         maxconn = record_dict['maxconn']
         msg = """server %s %s weight %s maxconn %s"""
-        with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w+', encoding="utf-8") as f2:
+        with open('config_old', 'r', encoding="utf-8") as f1, open("config_new", 'w', encoding="utf-8") as f2:
             lable = False
-            for line in f1:
-                if line.strip() == 'backend' + ' ' + backend_title:  # 如果找到删除的记录,就不写到新文件里
+            for line in f1:#遍历原始文件内容，查找有没有匹配到删除的标题
+                if line.strip() == 'backend' + ' ' + backend_title:  # 如果找到删除的标题就查找标题下内容，是否需要删除
                     f2.write(line)
                     lable = True
-                    list = f1.readlines()
-                    test_str = msg % (server, server, weight, maxconn)
+                    list = f1.readlines()#读取匹配标题下的所有内容
+                    target_str = msg % (server, server, weight, maxconn)
                     for i in list:
-                        if i.strip() == test_str:
+                        if i.strip() == target_str:#如果有与删除内容相同项，就删除，不写入新文件
                             index = list.index(i)
                             f2.writelines(list[0:index])
                             f2.writelines(list[index + 1:])
+                            print("the item %s has been delete!"%target_str)
                             break
-                        else:
+                        else:#如果标题相同，但是内容不同，就继续查找
                             continue
-                else:
-                    if lable == True:
-                        continue
-                    else:
-                        f2.write(line)
+                else:#如果标题都不匹配，就不删除，继续遍历查找
+                    f2.write(line)
+
 
     elif num=='q'or num=='quit':
         exit("Bye!")
     else:
         print("please input the auth number!")
         exit("Bye!")
-
-
 
 
 backupFile()
