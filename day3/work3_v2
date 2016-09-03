@@ -99,7 +99,6 @@ def user_input():
                 else:#如果标题都不匹配，就不删除，继续遍历查找
                     f2.write(line)
 
-
     elif num=='q'or num=='quit':
         exit("Bye!")
     else:
