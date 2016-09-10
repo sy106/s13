@@ -8,10 +8,7 @@ import json
 from day4.Atm.config import settings
 from day4.Atm.src.backend import logger
 
-
 CURRENT_USER_INFO = {}
-
-
 
 def dump_current_user_info():
 
@@ -59,9 +56,30 @@ def repay():
     还款
     :return:
     """
+    leng = len(CURRENT_USER_INFO['debt'])
+    msg = """
+           卡号：              %s
+           账单日期:           %s
+           总账单：            %s
+           信用卡账单：         %s
+           当前储蓄账户余额：   %s
+           当前信用卡剩余额度： %s
+        """
+    for i in range(leng):
+        print(msg % (CURRENT_USER_INFO['card'], CURRENT_USER_INFO['debt'][i]['date'], CURRENT_USER_INFO['debt'][i]['total_debt'],
+                     CURRENT_USER_INFO['debt'][i]['balance_debt'], CURRENT_USER_INFO['saving'],
+                     CURRENT_USER_INFO['balance']))
+    date=input("请输入需要还款的日期:例如2016_4_10\n>>>").strip()
     num = float(input('请输入还款金额').strip())
-    write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
-    CURRENT_USER_INFO['balance'] += num
+
+    for i in range(leng):
+        if date == CURRENT_USER_INFO['debt'][i]['date']:
+            CURRENT_USER_INFO['debt'][i]['balance_debt']-=num
+            CURRENT_USER_INFO['debt'][i]['total_debt']-=num
+            #重新load数据文件，如果还款金额大于账单金额，就冲抵目前的信用卡差额，再多，就存到储蓄账户里
+
+    # write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
+    # CURRENT_USER_INFO['balance'] += num
     dump_current_user_info()
 
 
