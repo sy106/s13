@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # Author:Alex Li
-
+import random
 """
 def f1():
     pass
@@ -95,7 +95,7 @@ s = "print(123)"
 # r = divmod(100, 10)
 # print(r[0])
 # print(r[1])
-
+#
 # n1, n2 = divmod(100, 10)
 
 #

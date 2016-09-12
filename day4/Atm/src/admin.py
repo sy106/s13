@@ -2,10 +2,18 @@
 # -*- coding:utf-8 -*-
 import os
 import json
-from lib import commons
-from config import settings
+from day4.Atm.lib import commons
+from day4.Atm.config import settings
+
 
 CURRENT_USER_INFO = {'is_authenticated': False, 'current_user': None}
+USER_INFO = {}
+
+
+def dump_user_info():
+
+    json.dump(USER_INFO, open(os.path.join(settings.USER_DIR_FOLDER, USER_INFO['card'], "basic_info.json"), 'w'))
+
 
 
 def init():
@@ -47,7 +55,10 @@ def remove_user():
     移除账户
     :return:
     """
-    pass
+    del_username=input("请输入你想删除的用户名:\n>>>").strip()
+    if del_username==USER_INFO['username']:
+
+
 
 
 def locked_user():
@@ -97,8 +108,8 @@ def login():
     :return:
     """
     while True:
-        username = input('请输入用户名：')
-        password = input('请输入密码：')
+        username = input('请输入管理员用户名：')
+        password = input('请输入管理员密码：')
 
         if not os.path.exists(os.path.join(settings.ADMIN_DIR_FOLDER, username)):
             print('用户名不存在')
