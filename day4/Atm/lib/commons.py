@@ -12,3 +12,4 @@ def md5(arg):
     obj = hashlib.md5()
     obj.update(bytes(arg, encoding='utf-8'))
     return obj.hexdigest()
+

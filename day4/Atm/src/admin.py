@@ -2,8 +2,8 @@
 # -*- coding:utf-8 -*-
 import os
 import json
-from lib import commons
-from config import settings
+from day4.Atm.lib import commons
+from day4.Atm.config import settings
 
 CURRENT_USER_INFO = {'is_authenticated': False, 'current_user': None}
 
@@ -13,7 +13,7 @@ def init():
     初始化管理员信息
     :return:
     """
-    dic = {'username': 'alex', 'password': commons.md5('123')}
+    dic = {'username': 'sy106', 'password': commons.md5('123')}
 
     json.dump(dic, open(os.path.join(settings.ADMIN_DIR_FOLDER, dic['username']), 'w'))
 

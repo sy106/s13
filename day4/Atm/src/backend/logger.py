@@ -3,7 +3,7 @@
 import os
 import time
 import logging
-from config import settings
+from day4.Atm.config import settings
 
 
 def get_logger(card_num, struct_time):

@@ -5,8 +5,8 @@ import logging
 import time
 import json
 
-from config import settings
-from src.backend import logger
+from day4.Atm.config import settings
+from day4.Atm.src.backend import logger
 
 
 CURRENT_USER_INFO = {}

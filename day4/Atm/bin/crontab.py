@@ -4,7 +4,7 @@
 定时任务，每日凌晨 00:00自动执行
 """
 
-from src import crontab as src_crontab
+from day4.Atm.src import crontab as src_crontab
 
 
 if __name__ == '__main__':

@@ -42,7 +42,7 @@ def login(user, pwd):
 
 def main():
     while True:
-        inp = input("1,后台管理；2,登录")
+        inp = input("1,后台管理；2,登录；3，权限管理")
         if inp == '1':
             manager()
         elif inp == '2':
