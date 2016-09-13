@@ -76,8 +76,6 @@ def remove_user():
         exit("try again!")
 
 
-
-
 def locked_user():
     """
     冻结账户

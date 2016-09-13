@@ -26,7 +26,7 @@ product_list =[
 
 
 t1=[['Taro', 12],['Taro', 22]]
-t2=['Taro', 22]
+t2=['Taro', 2.5, 22]
 # old_set=set(t1)
 # new_set=set(t2)
 # test_set1=new_set.difference(old_set)
@@ -46,49 +46,17 @@ t2=['Taro', 22]
 #     for num in range(length):
 #         str2=str[num]
 #         print(str2)
-#
-# f = open('record_list.txt', 'r+')#record_list.txt里面记录用户购物历史清单
-# username=input("username:").strip()
-# for user in f.readlines():
-#     user=user.split()
-#     print('test user:',user[0])
-#     if username == user[0]:
-#         print("the %s has old shop car"%username)
-#         salary
-# f.write('\n')
-# f.close()
 
-last=["'cucumber', 1", "'xiaomi5', 1"]
-new= [['cucumber', 1], ['Carrot', 1]]
-for last1 in last:
-    last1=last1.split('"')
-    last2=last1[0].split(', ')
-    print(last2[0][1:-1],last2[1])
-    long=len(new)
-    for i in range(long):
-     p_name=new[i][0]
-     if p_name in last2[0]:#如果有相同的选项，数量合并
-        # print("yes!")
-        # print(type(new[i][1]))
-        # print(type(last2[1]))
-        new[i][1] += int(last2[1])
-     elif p_name not in last2[0]:
-         new.append([last2[0][1:-1],last2[1]])
-     break
-
-
-print(new)
-
-
-# import time
-# now = time.strftime("%Y-%m-%d %H:%M:%S")
-# print(now)
-# now = datetime.datetime.now()
-# print (now)
-
-
-
-
+f = open('record_list.txt', 'r+')#record_list.txt里面记录用户购物历史清单
+username=input("username:").strip()
+for user in f.readlines():
+    user=user.split()
+    print('test user:',user[0])
+    if username == user[0]:
+        print("the %s has old shop car"%username)
+        salary
+f.write('\n')
+f.close()
 
 
 

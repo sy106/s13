@@ -1,4 +1,5 @@
-leo;[['cucumber', 14], ['nokia3', 1]];122946.5;2016-08-30 16:04:28
-admin;[['Iphone', 1], ['Carrot', 3]];117559;2016-08-30 16:10:47
-admin;[['Carrot', 4], ['huawei5', 1], ['Iphone', '1']];116656.0;2016-08-30 17:04:49
-leo;[['huawei5', 1], ['cucumber', '14'], ['nokia3', '1']];122046.5;2016-08-30 17:05:40
+leo [[xiaomi,2],[tomato,4],[nokia5,4]] 123
+admin [[tomato,12]] 12345
+admin [['cucumber', 1]] 12343
+admin [['Carrot', 23], ['nokia3', 1]] 11677
+admin [['cucumber', 4], ['nokia3', 2]] 11139

@@ -10,12 +10,16 @@ from day4.Atm.src.backend import logger
 
 
 CURRENT_USER_INFO = {}
+TRANSFER_USER_INFO = {}
 
 
 def dump_current_user_info():
 
     json.dump(CURRENT_USER_INFO, open(os.path.join(settings.USER_DIR_FOLDER, CURRENT_USER_INFO['card'], "basic_info.json"), 'w'))
 
+def dump_transfer_user_info():
+
+    json.dump(TRANSFER_USER_INFO, open(os.path.join(settings.USER_DIR_FOLDER, TRANSFER_USER_INFO['card'], "basic_info.json"), 'w'))
 
 def write_record(message):
     """
@@ -56,7 +60,6 @@ def repay():
     :return:
     """
     num = float(input('请输入还款金额').strip())
-    write_record('%s - 储蓄账户：%d' % ("还款", num))
     write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
     dump_current_user_info()
 
@@ -92,7 +95,13 @@ def transfer():
     转账
     :return:
     """
-    pass
+    card_num=input("请输入对方卡号：例如：6222020409028811\n>>>").strip()
+    if card_num==CURRENT_USER_INFO['card']:
+        print("不能给自己转账！")
+        pass
+    elif os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):
+
+
 
 
 def pay_check():
@@ -138,13 +147,11 @@ def init(card):
 
 
 
-
 def login():
     """
     登陆
     :return:
     """
-
     card_num = input("请输入信用卡卡号：例如：6222020409028810\n>>>").strip()#"6222020409028810"
     if os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):
         init(card_num)
