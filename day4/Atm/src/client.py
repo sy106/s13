@@ -33,7 +33,21 @@ def account_info():
     账户信息
     :return:
     """
-    pass
+    dump_current_user_info()
+    msg = """
+            username:       %s
+            card:           %s
+            credit:         %s
+            balance:        %s
+            saving:         %s
+            enroll_date:    %s
+            expire_date:    %s
+            status:         %s
+            debt:           %s
+            """
+    print(msg % (CURRENT_USER_INFO['username'], CURRENT_USER_INFO['card'], CURRENT_USER_INFO['credit'], CURRENT_USER_INFO['balance'],
+                 CURRENT_USER_INFO['saving'], CURRENT_USER_INFO['enroll_date'], CURRENT_USER_INFO['expire_date'],
+                 CURRENT_USER_INFO['status'], CURRENT_USER_INFO['debt']))
 
 
 def repay():
@@ -41,7 +55,11 @@ def repay():
     还款
     :return:
     """
-    pass
+    num = float(input('请输入还款金额').strip())
+    write_record('%s - 储蓄账户：%d' % ("还款", num))
+    write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
+    dump_current_user_info()
+
 
 
 def withdraw():
@@ -50,7 +68,7 @@ def withdraw():
     提现时，优先从自己余额中拿，如果余额不足，则使用信用卡（额度限制），提现需要手续费10%
     :return:
     """
-    num = float(input('请输入提现金额'))
+    num = float(input('请输入提现金额').strip())
     if CURRENT_USER_INFO['saving'] >= num:
         CURRENT_USER_INFO['saving'] -= num
 
@@ -58,6 +76,7 @@ def withdraw():
         dump_current_user_info()
     else:
         temp = num - CURRENT_USER_INFO['saving']
+        CURRENT_USER_INFO['balance']=float(CURRENT_USER_INFO['balance'])
         if CURRENT_USER_INFO['balance'] > (temp + temp * 0.05):
             CURRENT_USER_INFO['balance'] -= temp
             CURRENT_USER_INFO['balance'] -= temp * 0.05
@@ -108,7 +127,16 @@ def main():
 def init(card):
 
     basic_info = json.load(open(os.path.join(settings.USER_DIR_FOLDER, card, "basic_info.json")))
-    CURRENT_USER_INFO.update(basic_info)
+    if basic_info['status']==1:
+        print("该账户%s被冻结!"%card)
+        exit("请重新选择合法的信用卡！")
+    elif basic_info['status']==0:
+        CURRENT_USER_INFO.update(basic_info)
+    else:
+        print("该卡不可用！")
+        exit("请重新选择合法的信用卡！")
+
+
 
 
 def login():
@@ -117,10 +145,9 @@ def login():
     :return:
     """
 
-    card_num = "6222020409028810"
-    if card_num == "6222020409028810":
+    card_num = input("请输入信用卡卡号：例如：6222020409028810\n>>>").strip()#"6222020409028810"
+    if os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):
         init(card_num)
-
     return True
 
 
