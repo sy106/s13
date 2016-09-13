@@ -55,7 +55,11 @@ def repay():
     还款
     :return:
     """
-    pass
+    num = float(input('请输入还款金额').strip())
+    write_record('%s - 储蓄账户：%d' % ("还款", num))
+    write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
+    dump_current_user_info()
+
 
 
 def withdraw():
@@ -64,7 +68,7 @@ def withdraw():
     提现时，优先从自己余额中拿，如果余额不足，则使用信用卡（额度限制），提现需要手续费10%
     :return:
     """
-    num = float(input('请输入提现金额'))
+    num = float(input('请输入提现金额').strip())
     if CURRENT_USER_INFO['saving'] >= num:
         CURRENT_USER_INFO['saving'] -= num
 
@@ -72,6 +76,7 @@ def withdraw():
         dump_current_user_info()
     else:
         temp = num - CURRENT_USER_INFO['saving']
+        CURRENT_USER_INFO['balance']=float(CURRENT_USER_INFO['balance'])
         if CURRENT_USER_INFO['balance'] > (temp + temp * 0.05):
             CURRENT_USER_INFO['balance'] -= temp
             CURRENT_USER_INFO['balance'] -= temp * 0.05
