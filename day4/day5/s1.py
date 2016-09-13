@@ -25,6 +25,7 @@ def check_admin(func):
 
     return inner
 
+@check_login
 @check_admin
 def index(a):
     """

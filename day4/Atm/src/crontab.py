@@ -4,8 +4,8 @@ import os
 import json
 import time
 
-from config import settings
-from src.backend import logger
+from day4.Atm.config import settings
+from day4.Atm.src.backend import logger
 
 
 def main():

@@ -6,6 +6,7 @@ from day4.Atm.lib import commons
 from day4.Atm.config import settings
 
 
+
 CURRENT_USER_INFO = {'is_authenticated': False, 'current_user': None}
 USER_INFO = {}
 
@@ -21,7 +22,7 @@ def init():
     初始化管理员信息
     :return:
     """
-    dic = {'username': 'alex', 'password': commons.md5('123')}
+    dic = {'username': 'sy106', 'password': commons.md5('123')}
 
     json.dump(dic, open(os.path.join(settings.ADMIN_DIR_FOLDER, dic['username']), 'w'))
 
@@ -55,10 +56,7 @@ def remove_user():
     移除账户
     :return:
     """
-    del_username=input("请输入你想删除的用户名:\n>>>").strip()
-    if del_username==USER_INFO['username']:
-
-
+    pass
 
 
 def locked_user():
@@ -108,8 +106,8 @@ def login():
     :return:
     """
     while True:
-        username = input('请输入管理员用户名：')
-        password = input('请输入管理员密码：')
+        username = input('请输入用户名：')
+        password = input('请输入密码：')
 
         if not os.path.exists(os.path.join(settings.ADMIN_DIR_FOLDER, username)):
             print('用户名不存在')
