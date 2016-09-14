@@ -21,6 +21,7 @@ def main():
                 basic_info['saving'] -= interest
             else:
                 temp = interest - basic_info['saving']
+                basic_info['balance']=float(basic_info['balance'])
                 basic_info['balance'] -= temp
             logger_obj = logger.get_logger(card, struct_time)
             logger_obj.info("欠款利息 - %f - 备注：未还款日期%s；共欠款%f，未还款%f" % (interest, item['date'], item['total_debt'], item['balance_debt'],))

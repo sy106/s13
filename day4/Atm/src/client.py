@@ -139,11 +139,28 @@ def transfer():
 def pay_check():
     """
        查账
+
        :return:
        """
-    CURRENT_USER_INFO['debt']='{:.2f}'.format(float(CURRENT_USER_INFO['credit'])-float(CURRENT_USER_INFO['balance']))
-    dump_current_user_info()
-    print("目前的信用卡账单为%s；-储蓄账户余额为%s"%(CURRENT_USER_INFO['debt'],CURRENT_USER_INFO['saving']))
+    # CURRENT_USER_INFO['debt']='{:.2f}'.format(float(CURRENT_USER_INFO['credit'])-float(CURRENT_USER_INFO['balance']))
+    inp=input("请输入要查账的日期：例如2016_5_10\n>>>").strip()#m每月10号出账单
+    leng=len(CURRENT_USER_INFO['debt'])
+    msg="""
+       卡号：              %s
+       账单日期:           %s
+       总账单：            %s
+       信用卡账单：         %s
+       当前储蓄账户余额：   %s
+       当前信用卡剩余额度： %s
+    """
+    for i in range(leng):
+        if inp == CURRENT_USER_INFO['debt'][i]['date']:
+            print(msg%(CURRENT_USER_INFO['card'],inp,CURRENT_USER_INFO['debt'][leng-1]['total_debt'],CURRENT_USER_INFO['debt'][leng-1]['balance_debt'],CURRENT_USER_INFO['saving'],CURRENT_USER_INFO['balance']))
+            break
+    else:
+        print("该日期没有账单！")
+
+
 
 def main():
     menu = '''

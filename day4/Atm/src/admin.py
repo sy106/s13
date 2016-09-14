@@ -55,7 +55,7 @@ def create_user():
                  "enroll_date": "2016-01-01",
                  'expire_date': '2021-01-01',
                  'status': 0,  # 0 = normal, 1 = locked, 2 = disabled
-                 "debt": [], # 欠款记录，如：[{'date': "2015_4_10", "total_debt":80000, "balance_debt": 5000},{'date': "2015_5_10", "total":80000, "balance": 5000} ]
+                 "debt": [{'date': "2015_4_10", "total_debt":80000, "balance_debt": 5000},{'date': "2015_5_10", "total_debt":80000, "balance_debt": 5000} ], # 欠款记录，如：[{'date': "2015_4_10", "total_debt":80000, "balance_debt": 5000},{'date': "2015_5_10", "total":80000, "balance": 5000} ]
                  }
 
     json.dump(base_info, open(os.path.join(settings.USER_DIR_FOLDER, card_num, "basic_info.json"), 'w'))
