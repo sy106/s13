@@ -40,8 +40,7 @@ def create_user():
     card_credit=input("请输入信用卡的额度：\n>>>").strip()
 
     if os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num, 'record')):
-        print("the card already exit!please change the number!")
-        exit()
+        print("the card %s already exit!please change another card number!"%card_num)
     else:
         os.makedirs(os.path.join(settings.USER_DIR_FOLDER, card_num, 'record'))
 
@@ -72,7 +71,7 @@ def remove_user():
         shutil.rmtree(os.path.join(settings.USER_DIR_FOLDER, card_num))
         print("the user %s is deleted"%card_num)
     else:
-        print("the record is not exit!")
+        print("the %s record  is not exit!please change the card number!"%card_num)
         exit("try again!")
 
 
@@ -88,9 +87,8 @@ def locked_user():
         json.dump(basic_info, open(os.path.join(settings.USER_DIR_FOLDER, card_num, "basic_info.json"), 'w'))#将新的状态写入记录basic_info.json
         print("the user %s is locked"%card_num)
     else:
-        print("the record is not exit!")
+        print("the %s record  is not exit!please change the card number!" % card_num)
         exit("try again!")
-
 
 def search():
     """
@@ -115,7 +113,7 @@ def search():
                    basic_info['saving'],basic_info['enroll_date'],basic_info['expire_date'],
                    basic_info['status'],basic_info['debt']))
     else:
-        print("the record is not exit!")
+        print("the %s record  is not exit!please change the card number!" % card_num)
         exit("try again!")
 
 

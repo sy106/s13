@@ -10,7 +10,7 @@ from day4.Atm.src.backend import logger
 
 
 CURRENT_USER_INFO = {}
-TRANSFER_USER_INFO = {}
+
 
 
 def dump_current_user_info():
@@ -61,6 +61,7 @@ def repay():
     """
     num = float(input('请输入还款金额').strip())
     write_record('%s - 储蓄账户：%f；信用卡账户：%f；' % ("还款",CURRENT_USER_INFO['saving'],num))
+    CURRENT_USER_INFO['balance'] += num
     dump_current_user_info()
 
 
@@ -98,15 +99,51 @@ def transfer():
     card_num=input("请输入对方卡号：例如：6222020409028811\n>>>").strip()
     if card_num==CURRENT_USER_INFO['card']:
         print("不能给自己转账！")
-        pass
-    elif os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):
 
+    elif os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):#转账优先从储蓄账户转
+        tansfer_info = json.load(open(os.path.join(settings.USER_DIR_FOLDER, card_num, "basic_info.json")))
+        num = float(input('请输入转账金额\n>>>').strip())
+        if CURRENT_USER_INFO['saving'] >= num:
+            CURRENT_USER_INFO['saving'] -= num
 
+            write_record('%s - 储蓄账户：%d;-对方账号：%s' % ("转账", num,tansfer_info['card']))
+            dump_current_user_info()
+            tansfer_info['saving']+=num
+            json.dump(tansfer_info,
+                      open(os.path.join(settings.USER_DIR_FOLDER, tansfer_info['card'], "basic_info.json"), 'w'))
+            struct_time = time.localtime()
+            logger_obj = logger.get_logger(tansfer_info['card'], struct_time)
+            logger_obj.info('%s - 储蓄账户：%d -对方账号:%s' % ("到账", num, CURRENT_USER_INFO['card']))
+
+        else:
+            temp = num - CURRENT_USER_INFO['saving']
+            CURRENT_USER_INFO['balance'] = float(CURRENT_USER_INFO['balance'])
+            if CURRENT_USER_INFO['balance'] > (temp + temp * 0.05):
+                CURRENT_USER_INFO['balance'] -= temps
+                CURRENT_USER_INFO['balance'] -= temp * 0.05
+
+                write_record('%s - 储蓄账户：%f；信用卡账户：%f；手续费：%f；对方账号：%s' % ("转账", CURRENT_USER_INFO['saving'], temp, temp * 0.05,tansfer_info['card']))
+                dump_current_user_info()
+                tansfer_info['saving'] += num
+                json.dump(tansfer_info,
+                          open(os.path.join(settings.USER_DIR_FOLDER, tansfer_info['card'], "basic_info.json"), 'w'))
+                struct_time = time.localtime()
+                logger_obj = logger.get_logger(tansfer_info['card'], struct_time)
+                logger_obj.info('%s - 储蓄账户：%d -对方账号:%s' % ("到账", num,CURRENT_USER_INFO['card']))
+            else:
+                print('账户余额不足，无法完成转账')
+    else:
+        print("请输入合法的信用卡号！")
 
 
 def pay_check():
-    pass
-
+    """
+       查账
+       :return:
+       """
+    CURRENT_USER_INFO['debt']='{:.2f}'.format(float(CURRENT_USER_INFO['credit'])-float(CURRENT_USER_INFO['balance']))
+    dump_current_user_info()
+    print("目前的信用卡账单为%s；-储蓄账户余额为%s"%(CURRENT_USER_INFO['debt'],CURRENT_USER_INFO['saving']))
 
 def main():
     menu = '''
@@ -137,12 +174,12 @@ def init(card):
 
     basic_info = json.load(open(os.path.join(settings.USER_DIR_FOLDER, card, "basic_info.json")))
     if basic_info['status']==1:
-        print("该账户%s被冻结!"%card)
+        print("该账户%s被冻结!请联系银行客服！"%card)
         exit("请重新选择合法的信用卡！")
     elif basic_info['status']==0:
         CURRENT_USER_INFO.update(basic_info)
     else:
-        print("该卡不可用！")
+        print("该卡%s不可用！请联系银行客服！"%card)
         exit("请重新选择合法的信用卡！")
 
 
