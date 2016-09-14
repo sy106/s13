@@ -165,7 +165,8 @@ def main():
         user_option = input(">>:").strip()
         if user_option in menu_dic:
             menu_dic[user_option]()
-
+        elif user_option=='quit':
+            exit("成功退出！")
         else:
             print("选项不存在")
 
@@ -192,6 +193,8 @@ def login():
     card_num = input("请输入信用卡卡号：例如：6222020409028810\n>>>").strip()#"6222020409028810"
     if os.path.exists(os.path.join(settings.USER_DIR_FOLDER, card_num)):
         init(card_num)
+    elif card_num == 'quit':
+        exit("成功退出！")
     return True
 
 

@@ -137,7 +137,8 @@ def main():
         user_option = input(">>:").strip()
         if user_option in menu_dic:
             menu_dic[user_option]()
-
+        elif user_option == 'quit':
+            exit("成功退出！")
         else:
             print("选项不存在")
 
