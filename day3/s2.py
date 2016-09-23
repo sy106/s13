@@ -51,7 +51,7 @@ else:
 # 形式参数
 """
 def sendmail(xxoo, content):
-    # xxoo = alex
+    # xxoo = sy106
     try:
         import smtplib
         from email.mime.text import MIMEText

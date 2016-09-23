@@ -9,7 +9,7 @@ print name2
 name3=('!'.join(name2))
 print name3
 
-name4 = "alex li"
+name4 = "sy106"
 print""in name4
 print name4.center(40,'-')
 # print name4.capitalize()
