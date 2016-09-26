@@ -32,6 +32,15 @@ res3=re.split('\((\w+)\)',test,1)
 res4=re.findall(r"[\(][^\(\)]+\.+[^\(\)]+[\)]",test)
 res5=re.split(r"\((\d+[\+\-\*\/]\d+)\)",test,1)
 
+r6 = re.findall(r"\((.+)\)", test)
+while True:
+    if r6!=[]:
+        r6= re.findall(r"\((.+)\)", r6[0])
+        print("r6>>", r6)
+    else:
+        print("r6 is None")
+        break
+
 print(res)
 print(res2)
 print(res3)
