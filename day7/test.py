@@ -24,19 +24,19 @@ import re
 # r3= re.split("(al(e(x)))", origin, 1)
 # print(r3)
 
-test="8*12+(6-(5*6-2)/77+2)*(3-7)+8"
-
-res= re.split('\-',test)#根据非数字分
-res2=re.split('\w+',test)#根据数字分,分出来的全是字符
-res3=re.sub(' ','',test)
-# res4=re.findall(r"[\(][^\(\)]+\.+[^\(\)]+[\)]",test)
-res4=re.findall('\(',test)
-
-res5=re.findall('\)',test)
-res6=re.sub('\(',' ',test)
-res7=re.sub('\)',' ',res6)
-res8=re.findall('(\d+[\*\/\+\-]\d+)',res7)
-num=len(res8)
+# test="8*12+(6-(5*6-2)/77+2)*(3-7)+8"
+#
+# res= re.split('\-',test)#根据非数字分
+# res2=re.split('\w+',test)#根据数字分,分出来的全是字符
+# res3=re.sub(' ','',test)
+# # res4=re.findall(r"[\(][^\(\)]+\.+[^\(\)]+[\)]",test)
+# res4=re.findall('\(',test)
+#
+# res5=re.findall('\)',test)
+# res6=re.sub('\(',' ',test)
+# res7=re.sub('\)',' ',res6)
+# res8=re.findall('(\d+[\*\/\+\-]\d+)',res7)
+# num=len(res8)
 # res9=eval(test)
 # print(res9)
 # # for i in range(num):
@@ -80,12 +80,12 @@ num=len(res8)
 # mch = re.search("(\d+[*/]\d+)", test2)
 # print(mch)
 
-def firstvalue(a,b):
- c = a + b
- return c,a
-
-value=firstvalue(1,2)
-print(value )
+# def firstvalue(a,b):
+#  c = a + b
+#  return 6
+#
+# value=firstvalue(1,2)
+# print(value )
 # def compute_mul_div(expresstion):
 #     calc_list = re.split("[\W]", expresstion)  # 用* or /分割公式,得到数字
 #     operators = re.findall("[\w]", expresstion)  # 找出所有*和／号，得到
@@ -111,5 +111,90 @@ print(value )
 
 
 
+inpp = "-20+200*-3/-200*-300-100"
+
+def compute_mul_div(arg):
+    """ 操作乘除
+        :param expression:表达式
+        :return:计算结果"""
+    # calc_list = re.split("(\d+[*/]\d+)", arg, 1)  # 用* or /分割公式,得到数字
+    # operators = re.search("[*/]", calc_list[1]).group()  # 找出所有*和／号，得到字符
+
+    mch = re.search("([-]*\d+[*/][-]*\d+)", arg)
+    print("arg",arg)
+    print("mch",mch)
+    if mch==None:
+        print("arg",arg)
+        return arg
+
+    before, nothing, after = re.split("([-]*\d+[*/][-]*\d+)", arg, 1)#用* or /分割公式,得到中间的计算式
+    print(before, '>>', nothing, '>>', after)
+    print('before*/：',  arg)
+
+    content = re.split("[*/]", nothing)#得到表达式第一个*或者/的数字
+    operator = re.split('([*/])', nothing)#得到表达式第一个*或者/的符号
+    if operator[1] == '*':
+        value = int(content[0]) * int(content[1])
+    else:
+        value = int(content[0])/int(content[1])
+    value=int(value)
+    print("结果：》",value)
+    new_str = "%s%s%s" % (before, value, after)
+    print("new_str*/",new_str)
+    arg = new_str
+    return compute_mul_div(arg)
 
 
+
+compute_mul_div(inpp)
+
+# def compute_add_sub(arg):
+#     """ 操作加减
+#     :param expression:表达式
+#     :return:计算结果
+#     """
+#     while True:
+#         if arg.__contains__('+-') or arg.__contains__("++") or arg.__contains__('-+') or arg.__contains__(
+#                 "--"):
+#             arg = arg.replace('+-', '-')
+#             arg = arg.replace('++', '+')
+#             arg = arg.replace('-+', '-')
+#             arg = arg.replace('--', '+')
+#         else:
+#             break
+#     mch = re.search("([-]\d+[-+]\d+)", arg)
+#     print("mch", mch)
+#     if mch==None:
+#         print("arg",arg)
+#         return arg
+#
+#     before, nothing, after = re.split("(\d+[-+]\d+)",arg,1)
+#     print(before,'>>',nothing,'>>',after)
+#     print('before+-：', arg)
+#
+#     content=re.split("[-+]", nothing)
+#     operator=re.split('([-+])',nothing,1)
+#     print("content",content)
+#     print("operator", operator)
+#
+#     if before=='-':
+#         content[0]='-'+content[0]
+#         print("content", content)
+#         if operator[1]=='+':
+#             value=int(content[0])+int(content[1])
+#         else:
+#             value=int(content[0])-int(content[1])
+#         new_str = "%s%s" % (value, after)
+#     else:
+#         if operator[1]=='+':
+#             value=int(content[0])+int(content[1])
+#         else:
+#             value=int(content[0])-int(content[1])
+#         new_str = "%s%s%s" % (before, value, after)
+#
+#     print("value",value)
+#     print("after+-：",new_str)
+#     arg = new_str
+#     return compute_add_sub(new_str)
+
+# compute_add_sub(inpp)
