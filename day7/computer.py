@@ -49,23 +49,39 @@ def compute_mul_div(arg):
     """ 操作乘除
         :param expression:表达式
         :return:计算结果"""
-
-    mch = re.search("([-]*\d+[*/][-]*\d+)", arg)
+    while True:
+        if arg.__contains__('+-') or arg.__contains__("++") or arg.__contains__('-+') or arg.__contains__(
+                "--"):
+            arg = arg.replace('+-', '-')
+            arg = arg.replace('++', '+')
+            arg = arg.replace('-+', '-')
+            arg = arg.replace('--', '+')
+        else:
+            break
+    mch = re.search("([-]*\d+\.*\d*[*/][-]*\d+\.*\d*)", arg)
     if mch==None:
         return arg
 
-    before, nothing, after = re.split("([-]*\d+[*/][-]*\d+)", arg, 1)#用* or /分割公式,得到中间的计算式
-    print(before, '>>', nothing, '>>', after)
-    print('before*/：',  arg)
+    before, nothing, after = re.split("([-]*\d+\.*\d*[*/][-]*\d+\.*\d*)", arg, 1)#用* or /分割公式,得到中间的计算式
+    # print(before, '>>', nothing, '>>', after)
+    # print('before*/：', arg)
 
     content = re.split("[*/]", nothing)#得到表达式第一个*或者/的数字
     operator = re.split('([*/])', nothing)#得到表达式第一个*或者/的符号
+    # print('content[*/]：', content)
+    # print('operator[*/]：', operator)
+
     if operator[1] == '*':
-        value = int(content[0]) * int(content[1])
+        value = float(content[0]) * float(content[1])
     else:
-        value = int(content[0])/int(content[1])
-    value=int(value)
-    new_str = "%s%s%s" % (before, value, after)
+        value = float(content[0])/float(content[1])
+    value=float(value)
+    # print('value',value)
+    if value<0:
+        new_str = "%s%.2f%s" % (before, value, after)
+    else:
+        new_str = "%s+%.2f%s" % (before, value, after)
+    # print('new_str*/',new_str)
     arg = new_str
     return compute_mul_div(arg)
 
@@ -84,30 +100,36 @@ def compute_add_sub(arg):
             arg = arg.replace('--', '+')
         else:
             break
-    mch = re.search("([-]\d+[-+]\d+)", arg)
+    mch = re.search("([-]*\d+\.*\d*[-+]\d+\.*\d*)", arg)
+    # print('mch+-',mch)
     if mch==None:
         return arg
 
-    before, nothing, after = re.split("(\d+[-+]\d+)",arg,1)
-
+    before, nothing, after = re.split("([-]*\d+\.*\d*[-+]\d+\.*\d*)",arg,1)
+    # print(before, '>>', nothing, '>>', after)
+    # print('nothing[0]>>',nothing[0])
+    if nothing[0]=='-':
+        nothing=re.sub('-', '#', nothing,1)
     content=re.split("[-+]", nothing)
     operator=re.split('([-+])',nothing,1)
-
-    if before=='-':
-        content[0]='-'+content[0]
-        print("content", content)
+    # print('content[-+]：', content)
+    # print('operator[-+]：', operator)
+    # print(print('nothing[0]>>after',nothing[0]))
+    if nothing[0]=='#':
+        content[0] = re.sub('#', '-', content[0], 1)
+        # print("content", content)
         if operator[1]=='+':
-            value=int(content[0])+int(content[1])
+            value=float(content[0])+float(content[1])
         else:
-            value=int(content[0])-int(content[1])
+            value=float(content[0])-float(content[1])
         new_str = "%s%s" % (value, after)
     else:
         if operator[1]=='+':
-            value=int(content[0])+int(content[1])
+            value=float(content[0])+float(content[1])
         else:
-            value=int(content[0])-int(content[1])
+            value=float(content[0])-float(content[1])
         new_str = "%s%s%s" % (before, value, after)
-
+    # print('new_str[-+]：', new_str)
     arg = new_str
     return compute_add_sub(arg)
 
@@ -117,7 +139,7 @@ def compute_add_sub(arg):
 if __name__ == "__main__":
     # print '*'*20,"请计算表达式：", "1 - 2 * ( (60-30 +(-40.0/5) * (9-2*5/3 + 7 /3*99/4*2998 +10 * 568/14 )) - (-4*3)/ (16-3*2) )" ,'*'*20
     # inpp = '1 - 2 * ( (60-30 +(-40.0/5) * (9-2*5/3 + 7 /3*99/4*2998 +10 * 568/14 )) - (-4*3)/ (16-3*2) ) '
-    inpp = "1-2*-30/-12*(-20+200*-3/-200*-300-100)"
+    inpp = "1-(2.0*-30)/-12*(-20+200.5*-3/-200.78*-300.7-100)"
     # inpp = "1-5*980.0"
     inpp = re.sub('\s*', '', inpp)
     # 表达式保存在列表中
