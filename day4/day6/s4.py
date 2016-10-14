@@ -24,20 +24,21 @@ r2 = re.split("(al(e(x)))", origin, 1)
 print("r2>>",r2)
 
 
-def fun(ex):
-    if ex!=None:
-        ex= re.findall(r"\((.+)\)", ex[0])
-        print("r3>>", r3)
+# def fun(ex):
+#     if ex!=None:
+#         ex= re.findall(r"\((.+)\)", ex[0])
+#         print("r3>>", r3)
 
 # 无分组
 origin = "hello alex b(c(r(e))r)d adf+bcd lge acd 19"
 r3 = re.findall(r"\((.+)\)", origin)
-while r3!=[]:
+while True:
     if r3!=[]:
         r3= re.findall(r"\((.+)\)", r3[0])
         print("r3>>", r3)
     else:
         print("r3 is None")
+        break
 
 
 
