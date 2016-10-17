@@ -36,7 +36,7 @@
 # for item in sys.path:
 #     print(item)
 
-# import sys
-# print(sys.path)
+import sys
+print(sys.path)
 # sys.path.append('E:\\')
 # import order
