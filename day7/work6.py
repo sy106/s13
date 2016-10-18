@@ -85,11 +85,11 @@ def login():
             for times in range(3):
                 student_password = input('please input your password:>>>').strip()
                 if student_password == ret_S[j].password:
-                    if open(student_name , 'rb'):
-                        print("%s历史记录存在"%(student_name))
+                    if os.path.exists(student_name):
+                        print("%s的历史记录存在" % (student_name))
                         return ret_S[j]
                     else:
-                        print("%s历史记录不存在" % (student_name))
+                        print("%s历史记录不存在,请先选课" % (student_name))
                         pickle.dump(ret_S[j], open(student_name , 'wb'))
                         return ret_S[j]
                 else:
@@ -103,7 +103,7 @@ def login():
         quit()
 
 """
-    选课记录
+    已选课
     :return:
 """
 def selected_course(student):
