@@ -9,21 +9,24 @@
 import socketserver,json
 class MyServer(socketserver.BaseRequestHandler):
     def handle(self):
+        try:
         # print self.request,self.client_address,self.server
-        self.request.sendall(bytes('欢迎致电 10086，请输入1xxx,0转人工服务.',encoding="utf-8"))
-        while True:
-            data = self.request.recv(1024)
-            if len(data) == 0:break
-            print("data", data)
-            print("[%s] says:%s" % (self.client_address,data.decode() ))
+            self.request.sendall(bytes('欢迎访问FTP.',encoding="utf-8"))
+            while True:
+                data = self.request.recv(1024)
+                if len(data) == 0:break
+                print("data", data)
+                print("[%s] says:%s" % (self.client_address,data.decode() ))
 
-            task_data = json.loads( data.decode()  )
-            task_action = task_data.get("action")
-            if hasattr(self, "task_%s"%task_action):
-               func = getattr(self,"task_%s" %task_action)
-               func(task_data) 		
-            else:
-               print("task action is not supported",task_action)
+                task_data = json.loads( data.decode() )
+                task_action = task_data.get("action")
+                if hasattr(self, "task_%s"%task_action):
+                   func = getattr(self,"task_%s" %task_action)
+                   func(task_data)
+                else:
+                   print("task action is not supported",task_action)
+        except Exception as e:
+            print ("has error:",e)
 
     def task_put(self,*args,**kwargs):
         print("---put",args,kwargs)         

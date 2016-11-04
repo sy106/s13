@@ -11,7 +11,7 @@ import subprocess
 class MyServer(socketserver.BaseRequestHandler):
     def handle(self):
         # print self.request,self.client_address,self.server
-        self.request.sendall(bytes('欢迎致电 10086，请输入1xxx,0转人工服务.',encoding="utf-8"))
+        self.request.sendall(bytes('欢迎访问FTP服务器',encoding="utf-8"))
         while True:
             data = self.request.recv(1024)
             if len(data) == 0:break
