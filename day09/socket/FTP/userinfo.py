@@ -31,8 +31,8 @@ def user_create(NAME,PASSWD = ''):
         else:
             return 1
     else:
-        result = userinfo(NAME, PASSWD)
-        result.save_user()
+        #result = userinfo(NAME, PASSWD)
+        #result.save_user()
         print("the user is not exit !")
         return 1
 

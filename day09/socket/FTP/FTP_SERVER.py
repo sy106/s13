@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # Author:sy106
 
-import socketserver,os,time,subprocess
+import socketserver,os,time,subprocess,pickle
 from time import sleep
 from day09.socket.FTP import userinfo
 
@@ -43,27 +43,44 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
                     \033[0m'''
                     self.request.sendall(result)
                     continue
-                if recv_data[0] == 'send':
-                    filename = recv_data[1]
-                    self.request.sendall(bytes('ok2send', encoding="utf-8"))
-                    recv_data = self.request.recv(BUFSIZE)
-                    file2w = open(filename,'wb')
-                    file2w.write(recv_data)
-                    file2w.flush()
-                    file2w.close()
-                    self.request.sendall(bytes('\033[33;1mFile transfer successed!\033[0m', encoding="utf-8"))
+                if pickle.loads(recv_data)['status'] == 'send':
+                    data = pickle.loads(recv_data)
+                    filename = data['filename']
+                    filesize = data['file_size']
+                    server_response = {"status": 200}
+                    self.request.send(bytes(pickle.dumps(server_response), encoding='utf-8'))
 
+                    # recv_data = self.request.recv(BUFSIZE)
+                    # file2w = open(filename,'wb')
+                    # file2w.write(recv_data)
+                    # file2w.flush()
+                    # file2w.close()
+                    # self.request.sendall(bytes('\033[33;1mFile transfer successed!\033[0m', encoding="utf-8"))
+
+                    f = open(filename, 'wb')
+                    recv_size = 0
+                    while recv_size < filesize:
+                        data = self.request.recv(BUFSIZE)
+                        f.write(data)
+                        recv_size += len(data)
+                        print('filesize: %s  recvsize:%s' % (filesize, recv_size))
+                    print("file recv success")
+                    f.close()
                     continue
                 if recv_data[0] == 'get':
-                    filename = recv_data[1]
+                    abs_filepath = recv_data[1]
+                    file_size = os.stat(abs_filepath).st_size
+                    filename = abs_filepath.split("\\")[-1]
+
+                    ready_tag = 'Ready|%s' % file_size
                     if os.path.isfile(filename):
-                        self.request.sendall('ok2get')
+                        self.request.send(bytes(ready_tag, encoding='utf8'))  # 1发送数据长度
                         if self.request.recv(BUFSIZE) == 'ok2send':
-                            self.request.sendall("sending")
+                            self.request.send("sending")
                             sleep(1)
                             file_data = open(filename,'rb')
                             file_tmp = file_data.read()
-                            self.request.sendall(file_tmp)
+                            self.request.send(file_tmp)
                             sleep(1)
                             self.request.sendall("\033[33;1mDownloading complete!")
                             file_data.close()
@@ -80,9 +97,9 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
         except Exception as e:
             print(e)
 if __name__=='__main__':
-    HOST,PORT = '',9889
+    HOST,PORT = '127.0.0.1',8009
     ADDR = (HOST,PORT)
-    BUFSIZE = 2048
+    BUFSIZE = 4096
 
     try:
         server = socketserver.ThreadingTCPServer(ADDR,MyFtpHandler)

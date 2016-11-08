@@ -86,31 +86,47 @@ def switch():
         elif INPUT.split()[0] == 'get':
             abs_filepath = INPUT.split()[1]
             s.send(bytes(INPUT, encoding="utf-8"))
-            msg1 = s.recv(BUFSIZE).decode()
-            if msg1 == 'ok2send':
-                s.send(bytes('ok2get', encoding="utf-8"))
-                msg2 = s.recv(BUFSIZE).decode()
-                if msg2 == 'sending ':
-                    file_data = s.recv(BUFSIZE)
-                    file2w = open(abs_filepath, 'wb')
-                    # for line in file2w:
-                    #    s.send(line)
-                    file2w.write(file_data)
-                    file2w.flush()
-                    file2w.close()
-                    msg3 = s.recv(BUFSIZE)
-                    print(msg3)
-                    continue
-                elif msg1 == 'fail2get':
-                    s.send(bytes('ack', encoding='utf8'))
-                    msg4 = s.recv(BUFSIZE)
-                    print(msg4)
-                    continue
+            ready_tag = s.recv(BUFSIZE).decode()
+            # ready_tag = str(ready_tag, encoding='utf8')
+            if ready_tag.startswith('Ready'):  # Ready|9998
+                msg_size = int(ready_tag.split('|')[-1])  # 获取待接收数据长度
+            start_tag = 'Start'
+            s.send(bytes(start_tag, encoding='utf8'))  # 3发送确认信息
+
+            # 基于已经收到的待接收数据长度，循环接收数据
+            recv_size = 0
+            f = open(abs_filepath, 'wb')
+            while recv_size < msg_size:
+                recv_data = s.recv(BUFSIZE)
+                f.write(recv_data)
+                recv_size += len(recv_data)
+                print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
+            print("file recv success")
+            f.close()
+            # if msg1 == 'ok2send':
+            #     s.send(bytes('ok2get', encoding="utf-8"))
+            #     msg2 = s.recv(BUFSIZE).decode()
+            #     if msg2 == 'sending ':
+            #         file_data = s.recv(BUFSIZE)
+            #         file2w = open(abs_filepath, 'wb')
+            #         # for line in file2w:
+            #         #    s.send(line)
+            #         file2w.write(file_data)
+            #         file2w.flush()
+            #         file2w.close()
+            #         msg3 = s.recv(BUFSIZE)
+            #         print(msg3)
+            #         continue
+            #     elif msg1 == 'fail2get':
+            #         s.send(bytes('ack', encoding='utf8'))
+            #         msg4 = s.recv(BUFSIZE)
+            #         print(msg4)
+            #         continue
 
 
 if __name__ == '__main__':
-    HOST = input("Server IP:>>").strip()
-    PORT = int(input("Server PORT:>>")).strip()
+    HOST = '127.0.0.1'
+    PORT = 8009
     ADDR = (HOST, PORT)
     BUFSIZE = 2048
 
