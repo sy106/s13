@@ -3,38 +3,38 @@
 # Author: Sy106
 import os,pickle
 from day09.socket.FTP import commons
-#If it is your first time run this programm,use DIC={}
-#DIC = pickle.load(open('userdb','rb'))
-DIC = {}
+
+
 
 class userinfo(object):
     def __init__(self,username,password):
         self.username = username
-        self.password = password
+        self.password = commons.md5(password)
 
 
-    def save_user(self):
-        #dic_user = {'username': self.username, 'password': commons.md5(self.password)}
-        DIC[self.username] = [commons.md5(self.password)]
-        if os.path.exists('user_db'):
-            pickle.dump(DIC, open('user_db'), 'ab')
-        else:
-            pickle.dump(DIC,open('user_db'),'wb')
+user1 = userinfo('alex','123')
+user2 = userinfo('tom','234')
+user3 = userinfo('john','345')
 
-def user_create(NAME,PASSWD = ''):
-    if os.path.exists('user_db'):
-        DIC = pickle.load(open( 'user_db'), 'rb')
-        if NAME in DIC and commons.md5(PASSWD) == DIC[NAME][0]:
-            result = userinfo(NAME,PASSWD)
-            result.save_user()
-            return 0
-        else:
-            return 1
+list_S = [user1,user2,user3]
+pickle.dump(list_S,open('user_info','wb'))
+ret_S = pickle.load(open('user_info','rb'))
+
+
+def check(username,password):
+    # print("the user names are:")
+    # for i in range(len(list_S)):
+    #     print('%s:%s' % (i + 1, ret_S[i].username))
+
+    if username== 'q' or username == 'quit':
+        quit()
+    for j in range(len(list_S)):
+        if username == ret_S[j].username:
+                if password == ret_S[j].password:
+                    print("%s password is right" % (username))
+                    return 0
+                else:
+                    print('the password is wrong!please retry!')
     else:
-        #result = userinfo(NAME, PASSWD)
-        #result.save_user()
-        print("the user is not exit !")
+        print("the username is wrong!please relogin!")
         return 1
-
-if __name__ == '__main__':
-    user_create(userinfo.username,userinfo.password)

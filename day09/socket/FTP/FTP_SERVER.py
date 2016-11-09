@@ -2,37 +2,38 @@
 # -*- coding:utf-8 -*-
 # Author:sy106
 
-import socketserver,os,time,subprocess,pickle
+import socketserver,os,time,subprocess,json
 from time import sleep
 from day09.socket.FTP import userinfo
+from day09.socket.FTP import commons
 
+BUFSIZE =4096
 class MyFtpHandler(socketserver.BaseRequestHandler):
     def handle(self):
-        try:
+        # try:
             while True:
-                sleep(1)
-                self.request.sendall(bytes('auth first!',encoding="utf-8"))
+                self.request.send(bytes('auth',encoding="utf-8"))
                 name = self.request.recv(BUFSIZE).decode()
                 sleep(1)
-                self.request.sendall(bytes('pauth', encoding="utf-8"))
+                self.request.send(bytes('pauth', encoding="utf-8"))
 
                 password = self.request.recv(BUFSIZE).decode()
                 print(name,password)
-                auth_result = userinfo.user_create(name,password)
+                auth_result = userinfo.check(name,commons.md5(password))
                 if auth_result == 0:
-                    self.request.sendall(bytes('wlcome login!', encoding="utf-8"))
-                    break
+                    self.request.sendall(bytes('ok2login', encoding="utf-8"))
+
                 elif auth_result == 1:
-                    self.request.sendall(bytes('fail to login!', encoding="utf-8"))
+                    self.request.sendall(bytes('fail2login', encoding="utf-8"))
                     continue
 
-                recv_data = self.request.recv(BUFSIZE).split().decode()
-                if recv_data[0] == 'rls':
-                    result = os.popen('ls -l ./').read()
-                    self.request.sendall(bytes(result,encoding='utf8'))
-                    continue
-                if recv_data[0] == '?' or recv_data[0] == 'help':
-                    result = '''\033[32;lm
+                recv_data = self.request.recv(BUFSIZE)
+                recv_data1 = recv_data.decode()
+                print(recv_data1)
+                if len(recv_data) == 0:break #客户端如果退出，服务端将收到空消息，退出
+
+                elif recv_data1 == '?' or recv_data1 == 'help':
+                    result = '''\033[33;1m
                     ?\help:     Get help.
                     Get:        Download file from remote server.
                     Send:       Send local file to remote server.
@@ -41,14 +42,14 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
                     cd:         change file catalog.
                     quit\exit:  Quit the app.
                     \033[0m'''
-                    self.request.sendall(result)
-                    continue
-                if pickle.loads(recv_data)['status'] == 'send':
-                    data = pickle.loads(recv_data)
+                    self.request.send(bytes(result,encoding='utf-8'))
+
+                elif json.loads(recv_data1)['action'] == 'send':
+                    data = json.loads(recv_data1)
                     filename = data['filename']
                     filesize = data['file_size']
                     server_response = {"status": 200}
-                    self.request.send(bytes(pickle.dumps(server_response), encoding='utf-8'))
+                    self.request.send(bytes(json.dumps(server_response), encoding='utf-8'))
 
                     # recv_data = self.request.recv(BUFSIZE)
                     # file2w = open(filename,'wb')
@@ -66,43 +67,49 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
                         print('filesize: %s  recvsize:%s' % (filesize, recv_size))
                     print("file recv success")
                     f.close()
-                    continue
-                if recv_data[0] == 'get':
-                    abs_filepath = recv_data[1]
+
+                elif  recv_data1[0] == 'get':
+                    abs_filepath = recv_data1[1]
                     file_size = os.stat(abs_filepath).st_size
                     filename = abs_filepath.split("\\")[-1]
 
                     ready_tag = 'Ready|%s' % file_size
                     if os.path.isfile(filename):
-                        self.request.send(bytes(ready_tag, encoding='utf8'))  # 1发送数据长度
-                        if self.request.recv(BUFSIZE) == 'ok2send':
-                            self.request.send("sending")
-                            sleep(1)
-                            file_data = open(filename,'rb')
-                            file_tmp = file_data.read()
-                            self.request.send(file_tmp)
-                            sleep(1)
-                            self.request.sendall("\033[33;1mDownloading complete!")
-                            file_data.close()
+                        self.request.send(bytes(ready_tag, encoding='utf-8'))  # 1发送数据长度
+                        if self.request.recv(BUFSIZE) == 'Start':
+                            f = open(filename,'rb')
+                            for line in f:
+                                self.request.send(line)
+                            print("send file done! ")
+                            f.close()
+                else:
+                    # 发消息
+                    print("fffff")
+                    p = subprocess.Popen(str(recv_data, encoding='utf8'), shell=True,
+                                         stdout=subprocess.PIPE)  # 执行系统命令，windows平
+                    # 台命令的标准输出是gbk编码，需要转换
+                    res = p.stdout.read()  # 获取标准输出
+                    print("tttttt", res)
+                    if len(res) == 0:  # 执行错误命令，标准输出为空，
+                        send_data = 'cmd err'
                     else:
-                        self.request.sendall('fail2get')
-                        if self.request.recv(BUFSIZE) == 'ack':
-                            self.request.sendall('\033[31;1m%s not found\033[0m'%filename)
-                if recv_data[0] == 'cd':
-                    #self.request.sendall('ok2change')
-                    result = os.popen(recv_data).read()
-                    self.request.sendall(result)
-                    continue
+                        send_data = str(res, encoding='gbk')  # 命令执行ok，字节gbk---->str---->字节utf-8
 
-        except Exception as e:
-            print(e)
-if __name__=='__main__':
-    HOST,PORT = '127.0.0.1',8009
-    ADDR = (HOST,PORT)
-    BUFSIZE = 4096
+                    send_data = bytes(send_data, encoding='utf8')
 
-    try:
-        server = socketserver.ThreadingTCPServer(ADDR,MyFtpHandler)
-        server.serve_forever()
-    except KeyboardInterrupt:
-        server.shutdown()
+                    # 解决粘包问题
+                    ready_tag = 'Ready|%s' % len(send_data)
+                    self.request.send(bytes(ready_tag, encoding='utf8'))  # 1发送数据长度
+                    feedback = self.request.recv(1024)  # 4接收确认信息
+                    feedback = str(feedback, encoding='utf8')
+
+                    if feedback.startswith('Start'):
+                        self.request.send(send_data)  # 发送命令的执行结果
+
+
+
+        # except Exception as e:
+        #     print(e)
+if __name__ == '__main__':
+    server = socketserver.ThreadingTCPServer(('127.0.0.1',8009),MyFtpHandler)
+    server.serve_forever()
