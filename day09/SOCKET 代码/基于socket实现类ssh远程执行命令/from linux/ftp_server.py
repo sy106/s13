@@ -45,7 +45,7 @@ class MyServer(socketserver.BaseRequestHandler):
         f.close()
 
 if __name__ == '__main__':
-    server = socketserver.ThreadingTCPServer(('0.0.0.0',8009),MyServer)
+    server = socketserver.ThreadingTCPServer(('127.0.0.1',8009),MyServer)
     server.serve_forever()
 
 

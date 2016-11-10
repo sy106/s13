@@ -4,7 +4,7 @@
 
 import socket
 import os ,json
-ip_port=('192.168.11.150',8009)
+ip_port=('127.0.0.1',8009)
 #买手机
 s=socket.socket()
 #拨号

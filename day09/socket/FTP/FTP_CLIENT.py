@@ -13,7 +13,7 @@ import socket, os,json
 ip_port=('127.0.0.1',8009)
 s=socket.socket()
 s.connect(ip_port)
-
+BUFSIZE = 4096
 def auth():
     while True:
         try:
@@ -30,9 +30,8 @@ def auth():
                         return True
                     elif recv_msgl == 'fail2login':
                         print('\033[33;1mlogin failure!!!\033[0m')
-                        continue
-                    else:
-                        break
+                        return False
+
 
         except Exception as e:
             print(e)
@@ -43,24 +42,19 @@ def switch():
         INPUT = input('ftp:>>').strip()
         if len(INPUT) == 0:
             continue
+
         elif INPUT == 'quit' or INPUT == 'exit':
             s.close()
             break
+
         elif INPUT == '?' or INPUT == 'help':
-            s.send(bytes(INPUT, encoding='utf-8'))
+            msg_data = {"action": "help"}
+            s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
             recv_data = s.recv(BUFSIZE)
             print(recv_data.decode())
+
         elif INPUT == 'get' or INPUT == 'send':
             print('\033[33;1mYou must specified filename!!\033[0m')
-
-        # elif INPUT == 'ls':
-        #     cmd = os.popen('ls -l ./').read()
-        #     print(cmd)
-
-        elif INPUT == 'rls':
-            s.send(bytes(INPUT, encoding='utf-8'))
-            recv_data = s.recv(BUFSIZE)
-            print(recv_data.decode())
 
         elif INPUT.split()[0] == 'send':
             abs_filepath = INPUT.split()[1]
@@ -83,28 +77,36 @@ def switch():
                     print('send file done')
                 else:
                     print('\033[33;1m%s not found\033[0m' % filename)
+
         elif INPUT.split()[0] == 'get':
             abs_filepath = INPUT.split()[1]
-            s.send(bytes(INPUT, encoding="utf-8"))
-            ready_tag = s.recv(BUFSIZE).decode()
-            # ready_tag = str(ready_tag, encoding='utf8')
-            msg_size = 0
+            filename = abs_filepath.split("\\")[-1]
+            msg_data = {"action": "get",
+                        "filename": filename}
+            s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
+            ready_tag = s.recv(BUFSIZE)
+            print("test2", ready_tag)
+            ready_tag = ready_tag.decode()
             if ready_tag.startswith('Ready'):  # Ready|9998
                 msg_size = int(ready_tag.split('|')[-1])  # 获取待接收数据长度
-            start_tag = 'Start'
-            s.send(bytes(start_tag, encoding='utf-8'))  # 3发送确认信息
+                start_tag = 'Start'
+                s.send(bytes(start_tag, encoding='utf-8'))  # 3发送确认信息
 
-            # 基于已经收到的待接收数据长度，循环接收数据
-            recv_size = 0
-            f = open(abs_filepath, 'wb')
-            while recv_size < msg_size:
-                recv_data = s.recv(BUFSIZE)
-                f.write(recv_data)
-                recv_size += len(recv_data)
-                print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
-            print("file recv success")
-            f.close()
+                # 基于已经收到的待接收数据长度，循环接收数据
+                f = open(filename, 'wb')
+                recv_size = 0
+                while recv_size < msg_size:
+                    data = s.recv(BUFSIZE)
+                    f.write(data)
+                    recv_size += len(data)
+                    print(recv_size)
+                    print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
+                print("file recv success")
+                f.close()
         else:
+            msg_data = {"action": 'other',
+                        "INPUT":INPUT}
+            s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
             ready_tag = s.recv(BUFSIZE)  # 2收取带数据长度的字节：Ready|9998
             ready_tag = str(ready_tag, encoding='utf8')
             msg_size = 0
@@ -145,7 +147,7 @@ def switch():
 
 
 if __name__ == '__main__':
-    BUFSIZE = 4096
+
     if auth():
         switch()
     else:

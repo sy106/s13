@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # Author:Alex Li
 import socket
-ip_port=('127.0.0.1',8009)
+ip_port=('127.0.0.1',9999)
 #买手机
 s=socket.socket()
 #拨号
