@@ -22,9 +22,7 @@ ret_S = pickle.load(open('user_info','rb'))
 
 
 def check(username,password):
-    # print("the user names are:")
-    # for i in range(len(list_S)):
-    #     print('%s:%s' % (i + 1, ret_S[i].username))
+
 
     if username== 'q' or username == 'quit':
         quit()

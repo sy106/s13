@@ -8,7 +8,7 @@ import os
 import socket
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from config import settings
+from day09.socket import userinfo
 
 
 def send_file(file_path):

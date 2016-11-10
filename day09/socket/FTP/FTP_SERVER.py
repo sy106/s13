@@ -4,8 +4,15 @@
 
 import socketserver,os,time,subprocess,json
 from time import sleep
-from day09.socket.FTP import userinfo
-from day09.socket.FTP import commons
+from day09.socket.FTP import userinfo,commons
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))  # 配置文件的上层目录
+NEW_FILENAME = os.path.join(BASE_DIR, 'view')  # 新文件目录
+NAME_PWD = os.path.join(BASE_DIR, 'db', 'name_pwd')  # 用户名和密码目录
+USER_FILE = os.path.join(BASE_DIR, 'db')
+
 
 BUFSIZE =4096
 class MyFtpHandler(socketserver.BaseRequestHandler):
@@ -41,6 +48,10 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
         print("---send", args, kwargs)
         filename = args[0].get('filename')
         filesize = args[0].get('file_size')
+
+        new_filename = os.path.join(NEW_FILENAME,filename)
+        if filename in NEW_FILENAME:
+            has_rev = os.stat(NEW_FILENAME).st_size
         server_response = {"status": 200}
         self.request.send(bytes(json.dumps(server_response), encoding='utf-8'))
         f = open(filename, 'wb')

@@ -14,9 +14,11 @@ import subprocess
 import socketserver
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-# from config import settings
 
-# new = settings.NEW_FILENAME
+
+from day09.socket import userinfo
+
+new = userinfo.NEW_FILENAME
 
 
 class Myserver(socketserver.BaseRequestHandler):
@@ -80,7 +82,7 @@ class Myserver(socketserver.BaseRequestHandler):
         :return:是否登陆成功
         '''
         conn = self.request
-        s = pickle.load(open(settings.NAME_PWD, 'rb'))
+        s = pickle.load(open(userinfo.NAME_PWD, 'rb'))
         if usrname in s:
             if s[usrname] == self.md5(pwd):  # 和加密后的密码进行比较
                 return True
@@ -98,14 +100,14 @@ class Myserver(socketserver.BaseRequestHandler):
         '''
 
         conn = self.request
-        s = pickle.load(open(settings.NAME_PWD, 'rb'))
+        s = pickle.load(open(userinfo.NAME_PWD, 'rb'))
         if usrname in s:
             return False
         else:
             s[usrname] = self.md5(pwd)
-            mulu = os.path.join(settings.USER_FILE, usrname)
+            mulu = os.path.join(userinfo.USER_FILE, usrname)
             os.makedirs(mulu, 'a')
-            pickle.dump(s, open(settings.NAME_PWD, 'wb'))
+            pickle.dump(s, open(userinfo.NAME_PWD, 'wb'))
             return True
 
     def before(self, usrname, pwd, ret):
@@ -136,7 +138,7 @@ class Myserver(socketserver.BaseRequestHandler):
         '''
         conn = self.request
         conn.recv(1024)
-        mulu = os.path.join(settings.USER_FILE, usrname)
+        mulu = os.path.join(userinfo.USER_FILE, usrname)
         conn.sendall(bytes(mulu, encoding='utf-8'))
         while True:
             b = conn.recv(1024)
