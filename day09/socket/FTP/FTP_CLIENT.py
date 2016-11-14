@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 # Author:Alex Li
-import socket, os,json
+import socket,os,json,sys,time
 
 
 # class FtpClient(object):
@@ -31,7 +31,6 @@ def auth():
                     elif recv_msgl == 'fail2login':
                         print('\033[33;1mlogin failure!!!\033[0m')
                         return False
-
 
         except Exception as e:
             print(e)
@@ -66,46 +65,77 @@ def switch():
                             "filename": filename,
                             "file_size": file_size}
                 s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
-                server_confirmation_msg = s.recv(BUFSIZE).decode()
-                confirm_data = json.loads(server_confirmation_msg)
-                if confirm_data['status'] == 200:
-                    print("start sending file ", filename)
-                    f = open(abs_filepath, 'rb')
-                    for line in f:
-                        s.send(line)
-                    f.close()
-                    print('send file done')
-                else:
+                r= s.recv(BUFSIZE).decode()
+                size = 1024*1024
+                if r =='s':
+                    has_send = 0
                     print('\033[33;1m%s not found\033[0m' % filename)
+                else:
+                    has_send = int(r)
 
+                with open(abs_filepath,'rb') as f:
+                    f.seek(has_send)
+                    while has_send < file_size:
+                        data = f.read(size)
+                        s.send(data)
+                        has_send += len (data)
+                        time.sleep(0.4)
+                        view_bar(has_send,file_size)
+                print('send file done')
         elif INPUT.split()[0] == 'get':
             abs_filepath = INPUT.split()[1]
             filename = abs_filepath.split("\\")[-1]
             msg_data = {"action": "get",
                         "filename": filename}
             s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
-            ready_tag = s.recv(BUFSIZE)
+            ready_tag = s.recv(BUFSIZE).decode()
             print("test2", ready_tag)
-            ready_tag = ready_tag.decode()
             if ready_tag.startswith('Ready'):  # Ready|9998
                 msg_size = int(ready_tag.split('|')[-1])  # 获取待接收数据长度
                 start_tag = 'Start'
                 s.send(bytes(start_tag, encoding='utf-8'))  # 3发送确认信息
-
-                # 基于已经收到的待接收数据长度，循环接收数据
-                f = open(filename, 'wb')
-                recv_size = 0
-                while recv_size < msg_size:
-                    data = s.recv(BUFSIZE)
-                    f.write(data)
-                    recv_size += len(data)
-                    print(recv_size)
-                    print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
+                size = 1024 * 1024
+                if os.path.exists(abs_filepath):  # 断点续传
+                    recv_size = os.stat(abs_filepath).st_size
+                    s.send(bytes(str(recv_size), encoding='utf-8'))
+                    with open(abs_filepath, 'ab') as f:
+                        while recv_size < int(msg_size):
+                            data = s.recv(size)
+                            f.write(data)
+                            recv_size += len(data)
+                            time.sleep(0.4)
+                            view_bar(recv_size, msg_size)
+                            # print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
+                        else:
+                            print("%s has exit!" % filename)
+                else:  # 新文件下载
+                    recv_size = 0
+                    s.send(bytes('s', encoding='utf-8'))
+                    with open(abs_filepath, 'wb') as f:
+                        while recv_size < msg_size:
+                            data = s.recv(size)
+                            f.write(data)
+                            recv_size += len(data)
+                            time.sleep(0.4)
+                            view_bar(recv_size, msg_size)
+                            # print('filesize: %s  recvsize:%s' % (msg_size, recv_size))
                 print("file recv success")
-                f.close()
+
         else:
-            msg_data = {"action": 'other',
-                        "INPUT":INPUT}
+            if INPUT.split()[0] == 'cd':
+                if INPUT == 'cd':
+                    abs_filepath=''
+                else:
+                    abs_filepath = INPUT.split()[1]
+                msg_data = {"action": "cd",
+                            "filename": abs_filepath}
+
+            elif INPUT.split()[0] == 'ls':
+
+                msg_data = {"action": "ls"}
+            else:
+                msg_data = {"action": 'other',
+                            "INPUT":INPUT}
             s.send(bytes(json.dumps(msg_data), encoding="utf-8"))
             ready_tag = s.recv(BUFSIZE)  # 2收取带数据长度的字节：Ready|9998
             ready_tag = str(ready_tag, encoding='utf8')
@@ -124,27 +154,24 @@ def switch():
                 recv_size += len(recv_data)
                 print('MSG SIZE %s RECE SIZE %s' % (msg_size, recv_size))
 
-            print(str(recv_msg, encoding='utf8'))
-            # if msg1 == 'ok2send':
-            #     s.send(bytes('ok2get', encoding="utf-8"))
-            #     msg2 = s.recv(BUFSIZE).decode()
-            #     if msg2 == 'sending ':
-            #         file_data = s.recv(BUFSIZE)
-            #         file2w = open(abs_filepath, 'wb')
-            #         # for line in file2w:
-            #         #    s.send(line)
-            #         file2w.write(file_data)
-            #         file2w.flush()
-            #         file2w.close()
-            #         msg3 = s.recv(BUFSIZE)
-            #         print(msg3)
-            #         continue
-            #     elif msg1 == 'fail2get':
-            #         s.send(bytes('ack', encoding='utf8'))
-            #         msg4 = s.recv(BUFSIZE)
-            #         print(msg4)
-            #         continue
+            recv_msg = recv_msg.decode()
+            if ',' in recv_msg:
+                li = recv_msg.split(',')
+                for i in li:
+                    print(i)
+            else:
+                print(recv_msg)
 
+
+
+
+
+def view_bar(num, total):
+    rate = num / total
+    rate_num = int(rate * 100)
+    r1 = '\r%s>%d%%' %(num, rate_num)
+    sys.stdout.write(r1)
+    sys.stdout.flush()
 
 if __name__ == '__main__':
 
