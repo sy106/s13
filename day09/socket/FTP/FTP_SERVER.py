@@ -7,6 +7,7 @@ from time import sleep
 from day09.socket.FTP import userinfo,commons
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))# 配置文件的上层目录
+
 BUFSIZE =4096
 
 
@@ -22,6 +23,15 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
         auth_result = userinfo.check(name, commons.md5(password))
         if auth_result == 0:
             self.request.sendall(bytes('ok2login', encoding="utf-8"))
+            list_S = userinfo.list_S
+            ret_S = userinfo.ret_S
+            for j in range(len(list_S)):
+                if name == ret_S[j].username:
+                 global   user_bufsize,user_catalog
+                 user_bufsize = ret_S[j].bufsize#给用户磁盘配额
+                 user_catalog = os.path.join(ret_S[j].catalog,'home')
+                 os.makedirs(user_catalog)#创建用户home目录
+                 print('test>>',user_catalog)
         elif auth_result == 1:
             self.request.sendall(bytes('fail2login', encoding="utf-8"))
         while True:
@@ -46,36 +56,38 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
         print("---send", args, kwargs)
         filename = args[0].get('filename')
         filesize = args[0].get('file_size')
-
-        new_filename = os.path.join(BASE_DIR,filename)
-        print (new_filename)
-        size = 1024*1024
-        if os.path.exists(new_filename):#断点续传
-            recv_size = os.stat(new_filename).st_size
-            self.request.send(bytes(str(recv_size), encoding='utf-8'))
-            with open(new_filename,'ab') as f:
-                while recv_size < int(filesize):
-                    data = self.request.recv(size)
-                    f.write(data)
-                    recv_size += len(data)
-                    print('filesize: %s  recvsize:%s' % (filesize, recv_size))
-                else:
-                    print("%s has exit!"%filename)
-        else:#新文件上传
-            recv_size = 0
-            self.request.send(bytes('s', encoding='utf-8'))
-            with open(new_filename, 'wb') as f:
-                while recv_size < filesize:
-                    data = self.request.recv(size)
-                    f.write(data)
-                    recv_size += len(data)
-                    print('filesize: %s  recvsize:%s' % (filesize, recv_size))
-        print("file recv success")
-
+        if filesize < user_bufsize:
+            new_filename = os.path.join(user_catalog,filename)
+            print (new_filename)
+            size = 1024*1024
+            if os.path.exists(new_filename):#断点续传
+                recv_size = os.stat(new_filename).st_size
+                self.request.send(bytes(str(recv_size), encoding='utf-8'))
+                with open(new_filename,'ab') as f:
+                    while recv_size < int(filesize):
+                        data = self.request.recv(size)
+                        f.write(data)
+                        recv_size += len(data)
+                        print('filesize: %s  recvsize:%s' % (filesize, recv_size))
+                    else:
+                        print("%s has exit!"%filename)
+            else:#新文件上传
+                recv_size = 0
+                self.request.send(bytes('s', encoding='utf-8'))
+                with open(new_filename, 'wb') as f:
+                    while recv_size < filesize:
+                        data = self.request.recv(size)
+                        f.write(data)
+                        recv_size += len(data)
+                        print('filesize: %s  recvsize:%s' % (filesize, recv_size))
+            print("file recv success")
+        else:
+            print("传输文件大小超出配额范围>>%s"%user_bufsize)
+            self.request.send(bytes('传输文件大小超出配额范围！', encoding='utf-8'))
     def task_get(self, *args, **kwargs):
         print("---get", args, kwargs)
         filename = args[0].get("filename")
-        new_filename = os.path.join(BASE_DIR, filename)
+        new_filename = os.path.join(user_catalog, filename)
 
         if os.path.exists(new_filename):
 
@@ -124,7 +136,7 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
             send_data = os.getcwd()
         elif os.path.exists(os.getcwd()+'\\'+filepath):
             filename = 'FTP\\' + filepath.split("\\")[-1]  # 只能在基础目录的范围内切换
-            send_data = os.path.join(BASE_DIR, filename)
+            send_data = os.path.join(user_catalog, filename)
             os.chdir(send_data)
         else:
             send_data ="the catalog is not exit!"
@@ -145,7 +157,7 @@ class MyFtpHandler(socketserver.BaseRequestHandler):
 
     def task_ls(self,*args,**kwargs):
         args[0].get('action') == 'ls'
-        ls = os.listdir(BASE_DIR)
+        ls = os.listdir(user_catalog)
         print(ls)
         send_data = ','.join(ls)
         send_data = bytes(send_data, encoding='utf8')

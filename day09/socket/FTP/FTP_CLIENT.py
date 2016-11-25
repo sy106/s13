@@ -70,6 +70,9 @@ def switch():
                 if r =='s':
                     has_send = 0
                     print('\033[33;1m%s not found\033[0m' % filename)
+                elif r =='传输文件大小超出配额范围！':
+                    print("传输文件大小超出配额范围！请压缩后再传！")
+                    continue
                 else:
                     has_send = int(r)
 
