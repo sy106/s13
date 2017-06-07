@@ -7,10 +7,70 @@
         .pg-header{
             height: 30px;
             background-color: #dddddd;
-            line-height: 30px;
+            line-height:30px;
         }
+        .header2{
+            height: 40px;
+            background-color: red;
+            line-height: 40px;
+            color: white;
+        }
+        #b1{
+            float: left;
+           text-align:center;
+            padding:5px;
+        }
+         #inputSearch{
+             float: left;
+             height: 20px;
+             width: 120px;
+             padding:10px;
+        }
+
+        #btnSubmit{
+            float: left;
+
+            height: 20px;
+            width: 50px;
+            padding:10px;
+
+
+        }
+        #b4{
+            float: right;
+           text-align:center;
+            padding:10px;
+
+        }
+        #c1{
+            float: left;
+            padding:10px;
+            /*height:60%;*/
+            border: 1px solid gray;
+            width:200px;
+
+        }
+        #c7{
+            float: left;
+           text-align:center;
+            padding:10px;
+            width: 300px;
+            border: 1px solid red;
+
+        }
+        /*#c7{*/
+            /*float: left;*/
+            /*padding:10px;*/
+            /*width: 96px;*/
+            /*height:30px;*/
+            /*border: 1px solid green;*/
+
+        /*}*/
+
+
     </style>
 </head>
+
 <body style="margin: 0">
     <div class="pg-header">
         <div style="width: 1200px;margin: 0 auto;">
@@ -30,27 +90,87 @@
         </div>
     </div>
     <div>
-        <div style="width: 500px;margin: 0 auto;">
-            <div style="float: left">
-                 <img src="捕获3.PNG" title="促销" style="height: 50px;width: 120px;" alt="促销">
+        <div style="width: 900px;margin: 0 auto;">
+            <div id="b1">
+                 <img src="捕获3.PNG" title="促销" style="height: 50px;width: 120px;">
             </div>
-            <div style="width: 500px;">
+            <span id="inputSearch">
+                <input  class="search" title="请输入关键字" type="text">
+            </span>
+            <div id="btnSubmit">
+                <input  value="搜索" title="search" type="button">
+            </div>
 
-                <br>
-                <input class="c1" type="text" n="alex">
-            </div>
-            <div style="float: right">
-                <div style="height: 20px;width: 100px;background-color: #dddddd"></div>
+            <div id="b4">
+                <div style="height: 20px;width: 100px;background-color: #dddddd">
+                    购物车2件
+                </div>
             </div>
             <div style="clear: both"></div>
         </div>
     </div>
-    <div style="background-color: red;">
-         <div style="width: 980px;margin: 0 auto;">
-
-         </div>
+    <div class="header2">
+         <div style="width: 1200px;margin: 0 auto;">
+             <div style="width:15%;float: left;"><a>全部商品分类</a></div>
+             <div style="float: left;">
+                <a>首页</a>
+                <a>网上超市</a>
+                <a>水果超市</a>
+                <a>超级订餐</a>
+                <a>生活娱乐</a>
+                <a>研究院</a>
+                </div>
+             <div style="width:20%;float: right;">
+                <a>研究院</a>
+                <a>研究院</a>
+                 <a>论坛</a>
+                </div>
+             </div>
     </div>
-    <div style="width: 300px;border: 1px solid red;">
+    <!--<div id="c1" >-->
+        <!--<b>南方水果</b>-->
+        <!--<br>-->
+        <!--<p style="font-size:10px;">火龙果 火龙果 火龙果</p>-->
+        <!--<div id="c2">-->
+         <!--<b>南方水果</b>-->
+        <!--<br>-->
+        <!--<p style="font-size:10px;">火龙果 火龙果 火龙果</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div id="c1">
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;">
+             <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+
+    </div>
+    <div id= "c7" >
         <div style="width: 96px;height:30px;border: 1px solid green;float: left;"></div>
         <div style="width: 96px;height:30px;border: 1px solid green;float: left;"></div>
         <div style="width: 96px;height:30px;border: 1px solid green;float: left;"></div>
@@ -63,6 +183,9 @@
         <div style="width: 96px;height:30px;border: 1px solid green;float: left;"></div>
         <div style="width: 96px;height:30px;border: 1px solid green;float: left;"></div>
         <div style="clear: both;"></div>
+
     </div>
-</body>
-</html>
+
+
+ </body>
+ </html>
