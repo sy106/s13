@@ -1,19 +1,41 @@
+www.cnblogs.com/wupeiqi/articles/5602773.html
+www.cnblogs.com/wupeiqi/articles/5643298.html
 CSS补充：
-    - position
-    - background
-    - hover
-    - overflow
-    - z-index
-    - opacity
+    - position:
+        fixed =>固定在页面某个位置
+        relative + absolute
+        <div style="position: relative;>
+        <div style="position: absolute;right: 0;bottom: 0;"></div>
+    - background:
+         background-image: url(icon_18_118.png)#默认，div大，图片重复放
+         background-position-x;
+         background-position-y;
+         background-position:10px 10px;
+    - hover:/*当鼠标移动到当前标签上时，以下css属性才生效*/
+    - overflow：hidden，auto
+    - z-index：层级顺序
+    - opacity:透明度
     
     示例：输入框右边放置图标
     
 JavaScript：
+独立的语言，浏览器具有js解释器
+JavaScript代码存在形式：
+存在与head中：
+  <script>
+        //javascript代码
+        alert(123);
+    </script>
+ 保存在文件中：
+ <script src="文件路径"></script>
+存在与html中
+
     局部变量 var
     基本数据类型：
         数字
         字符串
-        数组
+        数组：
+        a=[11,22,33]
         字典
         布尔值
     For循环
