@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header {
+            height: 60px;
+            /*background-color: #dddddd;*/
+            line-height: 30px;
+        }
+
+        #京东图片 {
+            float: left;
+            text-align: center;
+            padding: 5px;
+            margin-left: 80px;
+            margin-top: 20px;
+
+        }
+
+        #i1 {
+            border: 1px solid rgba(9, 15, 46, 0.2);
+            width: 1000px;
+            height: 500px;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -250px;
+            position: fixed;
+
+        }
+
+        #i2-1 {
+            height: 500px;
+            width: 500px;
+            /*float: left;*/
+            position: absolute
+        }
+
+        #左边图片 {
+            height: 400px;
+            width: 400px;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -200px;
+            position: relative
+        }
+
+        #i2-2 {
+            height: 500px;
+            width: 500px;
+            float: right;
+
+        }
+
+        #i2-2-1 {
+            height: 400px;
+            width: 400px;
+            top: 50%;
+            margin-top: -300px;
+
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="pg-header">
+    <div style="width: 1200px;margin: 0 auto;line-height: 30px">
+        <div id="京东图片">
+            <img src="jd.PNG" title="京东" style="height: 70px;width: 200px;">
+        </div>
+    </div>
+</div>
+<div id="i1">
+    <div id="i2-1">
+
+        <img src="i2-1.PNG" id="左边图片">
+
+    </div>
+    <div id="i2-2">
+        <div id="i2-2-1"></div>
+        <p>
+            <span style="color: red">&#10038;</span>
+
+            <label for="username">用户名：</label><input id="username" title="请输入用户名" type="text" style="margin-left: 19px;width: 179px;
+            height: 30px;"></p>
+        <p>
+            <label style="color: red">&#10038;</label>
+            <label for="password">密码：</label><input id="password" title="请输入密码" type="text" style="margin-left: 35px;width: 179px;
+            height: 30px;"></p>
+        <p>
+            <lable style="color: red">&#10038;</lable>
+            <label for="Verification">验证码：</label><input id="Verification" title="请输入验证码" type="text" style="margin-left: 19px;width: 80px;
+            height: 30px;"></p>
+        <p>
+            <input type="checkbox" name="login" checked="checked" style="margin-left: 100px;"/><span
+                style="font-size: 70%">自动登录
+        <span style="color: blue;margin-left: 10px">忘记密码？</span></span>
+        </p>
+        <p>
+            <input type="submit" value="登     录" style="background-color: red;
+            color: white ;
+            width: 185px;
+            height: 35px;
+            border: 0px;
+            margin-left: 100px;"
+            />
+        </p>
+        <div onclick="GoTop();" style="width: 100px;height: 30px;background-color: green;color: white;
+    position: absolute;
+    bottom:0;
+    right: 0;
+    text-align: center;
+    ">免费注册>>
+        </div>
+    </div>
+
+
+</div>
+<div style="margin-top: 640px;margin-left: 450px;font-size: 70%">@2004-2015 www.autohome.com.cn All Rights Reserved 老男孩
+    版权所有
+</div>
+</body>
+</html>
