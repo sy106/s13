@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .pg-header {
+            height: 60px;
+            /*background-color: #dddddd;*/
+            line-height: 30px;
+        }
+
+        #京东图片 {
+            float: left;
+            text-align: center;
+            padding: 5px;
+            margin-left: 80px;
+            margin-top: 20px;
+
+        }
+
+        #i1 {
+            border: 1px solid rgba(9, 15, 46, 0.2);
+            width: 1000px;
+            height: 500px;
+            left: 50%;
+            top: 50%;
+            margin-left: -500px;
+            margin-top: -250px;
+            position: fixed;
+
+        }
+
+        #i2-1 {
+            height: 500px;
+            width: 500px;
+            /*float: left;*/
+            position: absolute
+        }
+
+        #左边 {
+            height: 400px;
+            width: 400px;
+            left: 50%;
+            top: 50%;
+            margin-left: -200px;
+            margin-top: -200px;
+            position: relative;
+            border: 1px red;
+        }
+
+        #右边 {
+            height: 500px;
+            width: 500px;
+            float: right;
+
+        }
+
+        .i2-2 {
+            margin-left: 35px;
+            width: 199px;
+            height: 25px;
+        }
+
+        .i2-3 {
+            margin-left: 50px;
+            width: 199px;
+            height: 25px;
+        }
+
+        #i2-2-1 {
+            height: 400px;
+            width: 400px;
+            /*top: 10%;*/
+            margin-top: 50px;
+            margin-left:200px;
+            border: 1px red;
+            position: fixed;
+
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="pg-header">
+    <div style="width: 1200px;margin: 0 auto;line-height: 30px">
+        <div id="京东图片">
+            <img src="jd.PNG" title="京东" style="height: 70px;width: 200px;">
+        </div>
+    </div>
+</div>
+<div id="i1">
+    <div id="i2-1">
+        <div id="左边">
+            <p>
+                <span style="color: red">&#10038;</span>
+
+                <label for="username ">用户名：</label><input id="username " class="i2-3" title="请输入用户名" type="text"></p>
+            <p>
+                <label style="color: red">&#10038;</label>
+                <label for="cellphone">手机号：</label><input id="cellphone" class="i2-3" title="请输入手机号" type="text"></p>
+            <p>
+                <label style="color: red">&#10038;</label>
+                <label for="password">登录密码：</label><input id="password" class="i2-2" title=" 请输入登录密码" type="text"></p>
+            <p>
+                <label style="color: red">&#10038;</label>
+                <label for="confirm_password">确认密码：</label><input id="confirm_password" class="i2-2" title=" 请再次输入登录密码"
+                                                                  type="text"></p>
+            <p>
+                <lable style="color: red">&#10038;</lable>
+                <label for="Verification">验证码：</label><input id="Verification" title="请输入验证" type="text" style="margin-left: 50px;width: 90px;
+            height: 25px;"></p>
+            <p>
+                <input type="checkbox" name="login" checked="checked" style="margin-left: 135px;"/><span
+                    style="font-size: 70%">我已阅读并同意
+        <a href="">《用户注册协议》</a></span>
+            <p>
+                <input type="submit" value="同意以上协议并注册" style="background-color: red;
+            color: white ;
+            width: 185px;
+            height: 25px;
+            border: 0px;
+            margin-left: 130px;"
+                />
+            </p>
+            </p>
+        </div>
+
+    </div>
+    <div>
+        <div id="右边">
+            <div id="i2-2-1">
+                <span style="font-size: 70%">我已注册，现在就<a href="workday15.html">登录</a></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
