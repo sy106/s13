@@ -34,8 +34,8 @@
         #i2-1 {
             height: 500px;
             width: 500px;
-            /*float: left;*/
-            position: absolute
+            float: left;
+            clear: both
         }
 
         #左边图片 {
@@ -46,12 +46,14 @@
             margin-left: -200px;
             margin-top: -200px;
             position: relative
+
         }
 
         #i2-2 {
             height: 500px;
             width: 500px;
             float: right;
+            /*clear: both*/
 
         }
 
@@ -86,11 +88,12 @@
             <span style="color: red">&#10038;</span>
 
             <label for="username">用户名：</label><input id="username" title="请输入用户名" type="text" style="margin-left: 19px;width: 199px;
-            height: 30px;"></p>
+            height: 30px;padding-right: 16px;"><span style="position:relative;right:19px;top:4px;background-image: url(i_name.jpg);height: 16px;width: 16px;display: inline-block;"></span></p>
+
         <p>
             <label style="color: red">&#10038;</label>
             <label for="password">密码：</label><input id="password" title="请输入密码" type="text" style="margin-left: 35px;width: 199px;
-            height: 30px;"></p>
+            height: 30px;padding-right: 15px;"><span style="position:relative;right:19px;top:4px;background-image: url(i_pwd.jpg);height: 19px;width: 15px;display: inline-block;"></span></p>
         <p>
             <lable style="color: red">&#10038;</lable>
             <label for="Verification">验证码：</label><input id="Verification" title="请输入验证码" type="text" style="margin-left: 19px;width: 80px;
@@ -109,13 +112,13 @@
             margin-left: 100px;"
             />
         </p>
-        <div onclick="GoRegister();" style="width: 100px;height: 30px;background-color: green;color: white;
+        <a href="workday15注册.html" onclick="GoRegister();" style="width: 100px;height: 30px;background-color: green;color: white;
     position: absolute;
     bottom:0;
     right: 0;
     text-align: center;
     ">免费注册>>
-        </div>
+        </a>
     </div>
 
 
