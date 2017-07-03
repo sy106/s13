@@ -15,6 +15,7 @@ CSS补充：
     - overflow：hidden，auto
     - z-index：层级顺序
     - opacity:透明度
+    行内标签设置宽度高度没有用
     
     示例：输入框右边放置图标
     

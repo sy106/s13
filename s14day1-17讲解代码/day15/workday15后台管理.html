@@ -50,19 +50,15 @@
 
         #inputSearch {
             float: left;
-            height: 20px;
+            height: 22px;
             width: 100px;
-            padding: 10px;
-            margin-top: 25px;
+            padding: 8px;
+            margin-top: 27px;
             position: relative;
             /*border: 5px red;*/
             background-color: white;
             cursor: pointer;
 
-        }
-
-        #inputSearch .search {
-            /*display: none;*/
         }
 
         #inputSearch .下拉菜单 {
@@ -142,14 +138,40 @@
 
         }
 
-        /*当鼠标移动到当前标签上时，以下css属性才生效*/
-        .图片群 menu:hover {
-            background-color: #c70048;
+        .图片群 .menu {
+            position: relative;
+            width: 800px;
+            height: 200px;
+            margin: 0 auto;
+            cursor: pointer;
+            color: white;
 
         }
 
-        .图片群 menu {
+        .图片群 .menu .pic {
+            text-align: center;
+            line-height: 25px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            height: 30px;
+            background-color: black;
+            color: white;
+            font-size: 50%
+
+        }
+
+        /*当鼠标移动到当前标签上时，以下css属性才生效*/
+        .图片群 .menu:hover {
+            border: 3px solid deeppink;
             display: inline-block;
+
+        }
+
+        .图片群 .menu:hover .pic {
+            background-color: deeppink;
+
 
         }
 
@@ -162,12 +184,6 @@
             font-size: 80%;
         }
 
-        /*.pg-header .user{*/
-        /*margin-right: 60px;*/
-        /*padding: 0 20px;*/
-        /*color: white;*/
-        /*height: 48px;*/
-        /*}*/
         .pg-header .user2:hover {
             background-color: gainsboro;
             color: white;
@@ -175,9 +191,7 @@
         }
 
         .pg-header .user1:hover {
-
             color: white;
-
         }
 
         .pg-header .user2 .b {
@@ -211,12 +225,17 @@
         .pg-header .user2 .b a:hover {
             background-color: #808080;
             color: white;
-
         }
 
-        /*.pg-header .user .b a{*/
-        /*display: block;*/
-        /*}*/
+        #search {
+            padding-top: 2px;
+            padding-bottom: 0px;
+            margin-left: -197px;
+            width: 149px;
+            height: 36px;
+            border: 0px;
+
+        }
 
 
     </style>
@@ -231,7 +250,8 @@
             <a class="user1" style="margin-left: 15px">购物车<span style="color: red;"> 0</span></a>
             <a class="user1" style="margin-left: 15px">我的订单</a>
             <a class="user1" style="margin-left: 15px">小说投稿</a>
-            </span><a class="user1" style="margin-left: 15px"><span><img src="i_phone.jpg" style="height:15px;margin-right: 4px;">手机当当</a>
+            <span class="user1" style="margin-left: 15px"><span><img src="i_phone.jpg"
+                                                                     style="height:15px;margin-right: 4px;">手机当当</span>
             <span class="user2" style="position: relative;margin-left: 15px;">
                 <span class="a" href="#" style="margin: 0 12px">我的当当</span>
                 <div class="b">
@@ -271,20 +291,21 @@
     </div>
 </div>
 <div style="background-color:#EAEAEB;z-index: 9;">
-    <div style="width: 1000px;margin: 0 auto;height: 100px;">
+    <div id="背景2" style="width: 1000px;margin: 0 auto;height: 100px;">
         <div id="促销图片">
             <img src="尾品会.PNG" title="促销" style="height: 70px;width: 210px;margin: 0 auto;">
         </div>
 
         <button type="search"
                 style="margin-left: 153px;margin-top: 25px;background-color: #e20052;border: 0;width: 39px;height: 40px;">
-            <div style="font-size:169%;margin: 0 auto;display: inline-block;color: #EAEAEB" s><i class="fa fa-search"
-                                                                                                 aria-hidden="true"></i>
+            <div style="font-size:169%;margin: 0 auto;display: inline-block;color: #EAEAEB">
+                <i class="fa fa-search" aria-hidden="true"></i>
             </div>
         </button>
-        <div id="inputSearch" href="#">全部分类<span style="margin-left: 5px;color: gainsboro"><i class="fa fa-arrow-down"
-                                                                                              aria-hidden="true"></i></span>
 
+        <div id="inputSearch" href="#">全部分类
+            <span style="margin-left: 5px;color: gainsboro">
+            <i class="fa fa-arrow-down" aria-hidden="true"></i></span>
 
             <div class="下拉菜单">
                 <a href="#">全部分类</a>
@@ -300,9 +321,11 @@
                 <a href="#">童装童鞋</a>
 
             </div>
-            <input class="search" title="请输入关键字" type="search">
-        </div>
 
+        </div>
+        <span>
+             <input id="search" onfocus="Focus();" onblur="Blur();" value="百丽" type="text">
+         </span>
 
         <div id="关键字">
             大家都在搜:
@@ -350,11 +373,12 @@
 
 
         <div class="图片群 ">
-            <div class="menu" style="position: relative;width:800px;height: 200px;margin: 0 auto;cursor:pointer">
-                <div style="text-align:center;line-height: 25px;position: absolute;left:0;bottom:0;width: 250px;height: 30px;background-color: black;color:white;font-size: 50%">
+            <div class="menu">
+                <div class="pic">
                     安尼纯特卖场
                 </div>
-                <div style="padding-left:20px;line-height: 25px;position: absolute;right:0;bottom:0;width: 550px;height: 30px;background-color: white;color:black;font-size: 50%;">
+                <div class="pic2"
+                     style="padding-left:20px;line-height: 25px;position: absolute;right:0;bottom:0;width: 550px;height: 30px;background-color: white;color:black;font-size: 50%;">
                     还剩3天
                 </div>
                 <div style="position: absolute;right:0;top:0;width: 550px;height: 170px;border: 1px red;">
@@ -363,13 +387,14 @@
                 <div style="position: absolute;left:0;top:0;width: 230px;height: 170px;background-color: white">
                     <img src="15week插入图片2.PNG"
                          style="width: 140px;height: 100px;position: absolute;top:10px;left:40px;">
-                    <div style="color: #e20052;margin-left: 70px;bottom:10px;position: absolute;font-size: 70%">领券立减80元
+                    <div class="pic3"
+                         style="color: #e20052;margin-left: 70px;bottom:10px;position: absolute;font-size: 70%">领券立减80元
                     </div>
                 </div>
             </div>
             <div class="menu"
                  style="position: relative;width:800px;height: 200px;margin: 0 auto;margin-top: 20px;cursor:pointer">
-                <div style="text-align:center;line-height: 25px;position: absolute;left:0;bottom:0;width: 250px;height: 30px;background-color: black;color:white;font-size: 50%">
+                <div class="pic">
                     安尼纯特卖场
                 </div>
                 <div style="padding-left:20px;line-height: 25px;position: absolute;right:0;bottom:0;width: 550px;height: 30px;background-color: white;color:black;font-size: 50%;">
@@ -389,6 +414,22 @@
         </div>
     </div>
 </div>
+<script>
+    function Focus() {
+        var tag = document.getElementById('search');
+        var val = tag.value;
+        if (val == "百丽") {
+            tag.value = "";
+        }
+    }
+    function Blur() {
+        var tag = document.getElementById('search');
+        var val = tag.value;
+        if (val.length == 0) {
+            tag.value = "百丽";
+        }
+    }
 
+</script>
 </body>
 </html>
