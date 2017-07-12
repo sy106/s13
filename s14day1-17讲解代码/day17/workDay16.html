@@ -126,7 +126,7 @@
         var tr = document.createElement('tr');//创建tr节点
 
         var t0 = document.createElement('td');//创建td节点
-        t0.innerHTML = "<input type='checkbox'>"
+        t0.innerHTML = "<input class='check'type='checkbox'>"
         var t1 = document.createElement('td')
         if ($('.td1').val() == '') {
             alert("hostname未输入关键值！")
@@ -172,23 +172,30 @@
         $(".modal,.shadow").addClass('hide');
 
         $('.del').click(function () { //删除按钮
+            console.log($(this).parent().parent());
             $(this).parent().parent().remove();//删除一整行
         });
 
+        $('.check').click(function () { //checkbox按钮
+            console.log($(this));
 
-//        $('.edit').click(function () { //编辑按钮
-////             $(this).hasClass('editing') ? $(this).removeClass('editing') : $(this).addClass('editing');
-//
-//        if ($(this).hasClass('editing')&&($(this).prop('checked'))) {
-//
-//             $(this).parent().siblings().attr('contenteditable', 'true');
-//            $(this).parent().siblings().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑选项
-//
-//        } else {
-//           $(this).parent().siblings().removeAttr('contenteditable');//如果是编辑模式，再次点击就完成编辑，退出编辑模式
-//
-//        }
-//        });
+
+            if ($(this).prop('checked')) {
+
+                $(this).parent().parent().children().children('.edit').addClass('editing');
+                //进入编辑模式
+                $(this).parent().parent().children().attr('contenteditable', 'true');
+                $(this).parent().parent().children().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑状态
+                $(this).parent().parent().children().last().removeAttr('contenteditable');//进入编辑模式，去掉状态栏的可编辑状态
+
+            } else {
+                $(this).parent().parent().children().children('.edit').removeClass('editing');
+                $(this).parent().parent().children().removeAttr('contenteditable');
+
+            }
+        });
+
+
     }
 
 
@@ -198,31 +205,14 @@
 
 
     }
-    function cancelModal() {//编辑页面取消按钮
+    function cancelModal() {//添加页面取消按钮
         $(".modal,.shadow").addClass('hide');
-//        $('.modal input[type="text"]').val("");
+
     }
 
     $('.del').click(function () { //删除按钮
         $(this).parent().parent().remove();//删除一整行
     });
-
-    //    $('.edit').click(function () {//编辑按钮
-    //
-    //        $(this).hasClass('editing') ? $(this).removeClass('editing') : $(this).addClass('editing');
-    //
-    if ($(this).hasClass('editing') && ($('#tb :checkbox').prop('checked'))) {
-
-        $(this).parent().siblings().attr('contenteditable', 'true');
-        $(this).parent().siblings().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑选项
-
-    } else {
-        $(this).parent().siblings().removeAttr('contenteditable');//如果是编辑模式，再次点击就完成编辑，退出编辑模式
-
-    }
-    //
-    //
-    //    });
 
 
     function checkAll() {
@@ -244,29 +234,39 @@
 
     }
 
-    function reverseAll() {
+    function reverseAll() {//反选
         $(':checkbox').each(function (k) {
             // this,代指当前循环的每一个元素z
             // 三元运算var v = 条件? 真值：假值
             var v = $(this).prop('checked') ? false : true;
             $(this).prop('checked', v);
+            if ($(this).prop('checked')) {
+
+                $(this).parent().parent().children().children('.edit').addClass('editing');
+                //进入编辑模式
+                $(this).parent().parent().children().attr('contenteditable', 'true');
+                $(this).parent().parent().children().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑状态
+                $(this).parent().parent().children().last().removeAttr('contenteditable');//进入编辑模式，去掉状态栏的可编辑状态
+
+            } else {
+                $(this).parent().parent().children().children('.edit').removeClass('editing');
+                $(this).parent().parent().children().removeAttr('contenteditable');
+
+            }
         })
-        $(".edit").hasClass('editing') ? $(".edit").removeClass('editing') : $(".edit").addClass('editing');
+
     }
 
 
     $('.check').click(function () { //checkbox按钮
 
-        console.log($(this).parent().parent().children());
-
-
         if ($(this).prop('checked')) {
 
             $(this).parent().parent().children().children('.edit').addClass('editing');
             //进入编辑模式
-        $(this).parent().parent().children().attr('contenteditable', 'true');
-        $(this).parent().parent().children().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑状态
-        $(this).parent().parent().children().last().removeAttr('contenteditable');//进入编辑模式，去掉状态栏的可编辑状态
+            $(this).parent().parent().children().attr('contenteditable', 'true');
+            $(this).parent().parent().children().eq(0).removeAttr('contenteditable');//如果进入编辑模式，去掉checkbox的编辑状态
+            $(this).parent().parent().children().last().removeAttr('contenteditable');//进入编辑模式，去掉状态栏的可编辑状态
 
         } else {
             $(this).parent().parent().children().children('.edit').removeClass('editing');
