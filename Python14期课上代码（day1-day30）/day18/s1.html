@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="checkbox" />
+<script src="jquery-1.12.4.js"></script>
+<script>
+    $ (':checkbox').click(function(){
+        var v=$(this).prop('checked');
+        console.log(v);
+    })
+//先打的对勾，再输出的，先执行默认的，再绑定事件
+</script>
+</body>
+</html>
