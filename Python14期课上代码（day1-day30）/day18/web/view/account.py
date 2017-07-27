@@ -2,7 +2,7 @@ import time
 def handle_index():
     # 返回的内容
     v=str(time.time())
-    f=open('views/index.html',mode='rb')
+    f=open('template/index.html',mode='rb')
     data=f.read()
     f.close()
     data=data.replace(b'@uuuuu',v.encode('utf-8'))
