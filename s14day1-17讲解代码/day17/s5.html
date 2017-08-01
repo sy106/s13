@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .hide{
+        .hide {
             display: none;
         }
-        .modal{
+
+        .editing {
+            background-color: orange;
+            color: white;
+        }
+
+        .modal {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -18,7 +24,8 @@
             background-color: #eeeeee;
             z-index: 10;
         }
-        .shadow{
+
+        .shadow {
             position: fixed;
             top: 0;
             left: 0;
@@ -31,110 +38,197 @@
     </style>
 </head>
 <body>
-    <a onclick="addElement();">添加</a>
+<a onclick="addElement();">添加</a>
+<input type="button" value="全选" onclick="checkAll();"/>
+<input type="button" value="反选" onclick="reverseAll();"/>
+<input type="button" value="取消" onclick="cancleAll();"/>
+<a  class="edit" >进入编辑模式</a>
 
-    <table border="1" id="tb">
-        <tr>
-            <td target="hostname">1.1.1.11</td>
-            <td target="port">80</td>
-            <td target="ip">80</td>
-            <td>
-                <a class="edit">编辑</a> | <a class="del">删除</a>
-            </td>
-        </tr>
-        <tr>
-            <td target="hostname">1.1.1.12</td>
-            <td target="port">80</td>
-            <td target="ip">80</td>
-            <td>
-                <a class="edit">编辑</a> | <a class="del">删除</a>
-            </td>
-        </tr>
-        <tr>
-            <td target="hostname">1.1.1.13</td>
-            <td target="port">80</td>
-            <td target="ip">80</td>
-            <td>
-                <a class="edit">编辑</a> | <a class="del">删除</a>
-            </td>
-        </tr>
-        <tr>
-            <td target="hostname">1.1.1.14</td>
-            <td target="port">80</td>
-            <td target="ip">80</td>
-            <td>
-                <a class="edit">编辑</a> | <a class="del">删除</a>
-            </td>
+<table border="1" id="tb" style="margin-top: 10px;">
+    <tr>
+        <th>选项</th>
+        <th>Hostname</th>
+        <th>Port</th>
+        <th>IP</th>
+        <th>操作栏</th>
+    </tr>
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td  target="hostname">1.1.1.11</td>
+        <td target="port">80</td>
+        <td target="ip">80</td>
+        <td>
+            <a class="del">删除</a>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td target="hostname">1.1.1.12</td>
+        <td target="port">80</td>
+        <td target="ip">80</td>
+        <td>
+            <a class="del">删除</a>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td target="hostname">1.1.1.13</td>
+        <td target="port">80</td>
+        <td target="ip">80</td>
+        <td>
+            <a class="del">删除</a>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"/></td>
+        <td target="hostname">1.1.1.14</td>
+        <td target="port">80</td>
+        <td target="ip">80</td>
+        <td>
+            <a class="del">删除</a>
+        </td>
 
-        </tr>
-    </table>
+    </tr>
+</table>
 
-    <div class="modal hide">
-        <div>
-            <input name="hostname" type="text"  />
-            <input name="port" type="text" />
-            <input name="ip" type="text" />
+<div class="modal hide">
+    <div>
+        <!--<div>hostname:<input name="hostname" type="text"/></div>-->
+        <!--<div> port: <input name="port" type="text"/></div>-->
+        <!--<div>ip:<input name="ip" type="text"/></div>-->
+        <div border="1" style="float: left">
+            <div>Hostname:</div>
+            <div>Port:</div>
+            <div>IP:</div>
         </div>
-
-        <div>
-            <input type="button" value="取消" onclick="cancelModal();" />
-            <input type="button" value="确定" onclick="confirmModal();" />
+        <div style="float: left;">
+            <div><input class="td1" name="hostname" type="text"/></div>
+            <div><input class="td2" name="port" type="text"/></div>
+            <div><input class="td3" name="ip" type="text"/></div>
         </div>
     </div>
 
-    <div class="shadow hide"></div>
+    <div style="float: right;position: absolute;bottom: 0;right: 0;">
+        <input type="button" value="取消" onclick="cancelModal();"/>
+        <input type="button" value="确定" onclick="confirmModal();"/>
+    </div>
+</div>
 
-    <script src="jquery-1.12.4.js"></script>
-    <script>
 
-        $('.del').click(function () {
-            $(this).parent().parent().remove();
+<div class="shadow hide"></div>
+
+<script src="jquery-1.12.4.js"></script>
+<script>
+
+
+    function confirmModal() {//编辑页面确定按钮
+//-------------------------------------------------------------
+        var tr = document.createElement('tr');//创建tr节点
+
+        var t0 = document.createElement('td');//创建td节点
+        t0.innerHTML = "<input type='checkbox'>"
+        var t1 = document.createElement('td')
+        if ($('.td1').val() == '') {
+            alert("hostname未输入关键值！")
+            return
+        } else {
+            t1.innerHTML = $(".td1").val();
+            $(t1).attr('target', 'hostname');
+        }
+
+        var t2 = document.createElement('td');
+        if ($('.td2').val() == '') {
+            alert("port未输入关键值！")
+            return
+        } else {
+            t2.innerHTML = $(".td2").val();
+            $(t2).attr('target', 'port');
+        }
+
+        var t3 = document.createElement('td');
+        if ($('.td3').val() == '') {
+            alert("ip未输入关键值！")
+            return
+
+        } else {
+            t3.innerHTML = $(".td3").val();
+            $(t3).attr('target', 'ip');
+        }
+
+        var t4 = document.createElement('td');
+        t4.innerHTML = "<a class='del'>删除</a>"
+
+        console.log(t1.innerHTML)
+        console.log(t2.innerHTML)
+        console.log(t3.innerHTML)
+        console.log(t4.innerHTML)
+
+
+        $(tr).append(t0);//生成新的一行数据
+        $(tr).append(t1);
+        $(tr).append(t2);
+        $(tr).append(t3);
+        $(tr).append(t4);
+
+        $('#tb').append(tr);//将该行加入整个表格
+
+
+//-------------------------------------------------------------------
+
+        $(".modal,.shadow").addClass('hide');
+
+        $('.del').click(function () { //删除按钮
+            $(this).parent().parent().remove();//删除一整行
         });
-        
-        function  confirmModal() {
 
-            var tr = document.createElement('tr');
-            var td1 = document.createElement('td');
-            td1.innerHTML = "11.11.11.11";
-            var td2 = document.createElement('td');
-            td2.innerHTML = "8001";
 
-            $(tr).append(td1);
-            $(tr).append(td2);
+        $('.edit').click(function () { //编辑按钮
+            $('.edit').attr('style', 'backgound-color')
+        });
 
-            $('#tb').append(tr);
-
-            $(".modal,.shadow").addClass('hide');
 //            $('.modal input[type="text"]').each(function () {
 //                // var temp = "<td>..."
 //
 //
 //
 //            })
-        }
+    }
 
-        function  addElement() {
-            $(".modal,.shadow").removeClass('hide');
-        }
-        function cancelModal() {
-            $(".modal,.shadow").addClass('hide');
-            $('.modal input[type="text"]').val("");
-        }
 
-        $('.edit').click(function(){
-            $(".modal,.shadow").removeClass('hide');
-            // this
-            var tds = $(this).parent().prevAll();
-            tds.each(function () {
-                // 获取td的target属性值
-                var n = $(this).attr('target');
-                // 获取td中的内容
-                var text = $(this).text();
-                var a1 = '.modal input[name="';
-                var a2 = '"]';
-                var temp = a1 + n + a2;
-                $(temp).val(text);
-            });
+    function addElement() {//添加按钮
+        $(".modal,.shadow").removeClass('hide');
+        $('.modal input[type="text"]').val("");
+
+
+    }
+    function cancelModal() {//编辑页面取消按钮
+        $(".modal,.shadow").addClass('hide');
+//        $('.modal input[type="text"]').val("");
+    }
+
+    $('.del').click(function () { //删除按钮
+        $(this).parent().parent().remove();//删除一整行
+    });
+
+    $('.edit').click(function () {//编辑按钮
+
+        $(this).hasClass('editing')?$(this).removeClass('editing'):$(this).addClass('editing');
+
+
+//        $(".modal,.shadow").removeClass('hide');
+//        // this
+//        var tds = $(this).parent().prevAll();//选择整个一行的数据
+////        console.log($(this));//显示该行数据内容
+//        tds.each(function () {
+//            // 获取td的target属性值
+//            var n = $(this).attr('target');
+//            // 获取td中的内容
+//            var text = $(this).text();
+//            var a1 = '.modal input[name="';
+//            var a2 = '"]';
+//            var temp = a1 + n + a2;
+//            $(temp).val(text);//文本操作
+//        });
 
 
 //            var port = $(tds[0]).text();
@@ -142,11 +236,33 @@
 //
 //            $('.modal input[name="hostname"]').val(host);
 //            $('.modal input[name="port"]').val(port);
-            // 循环获取tds中内容
-            // 获取 <td>内容</td> 获取中间的内容
-            // 赋值给input标签中的value
+        // 循环获取tds中内容
+        // 获取 <td>内容</td> 获取中间的内容
+        // 赋值给input标签中的value
 
-        });
-    </script>
+    });
+
+
+    function checkAll() {
+        $('#tb :checkbox').prop('checked', true);
+        if($('.edit').hasClass('editing')){
+//            $('target').attr('contentEditable','true');
+            if($('td').has('target')){
+                $('target').attr('contentEditable','true');
+            }
+        }
+    }
+    function cancleAll() {
+        $('#tb :checkbox').prop('checked', false);
+    }
+    function reverseAll() {
+        $(':checkbox').each(function (k) {
+            // this,代指当前循环的每一个元素z
+            // 三元运算var v = 条件? 真值：假值
+            var v = $(this).prop('checked') ? false : true;
+            $(this).prop('checked', v);
+        })
+    }
+</script>
 </body>
 </html>
