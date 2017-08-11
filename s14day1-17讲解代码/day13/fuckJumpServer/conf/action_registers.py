@@ -5,7 +5,7 @@ from modules import views
 
 actions = {
     'start_session': views.start_session,
-    # 'stop': views.stop_server,
+    # 'stop': template.stop_server,
     'syncdb': views.syncdb,
     'create_users': views.create_users,
     'create_groups': views.create_groups,

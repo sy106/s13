@@ -5,7 +5,7 @@ __author__ = "Alex Li"
 
 import socket
 server = socket.socket()
-server.bind(('localhost',6969)) #绑定要监听端口
+server.bind(('localhost',9999)) #绑定要监听端口
 server.listen(5) #监听
 
 print("我要开始等电话了")
@@ -17,7 +17,7 @@ while True:
     count = 0
     while True:
         data = conn.recv(1024)
-        print("recv:",data)
+        print("recv:",data.decode())
         if not data:
             print("client has lost...")
             break

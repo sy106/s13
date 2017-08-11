@@ -14,7 +14,7 @@ channel.queue_declare(queue='hello2',durable=True)
 
 
 def callback(ch, method, properties, body): #回调函数
-    print("-->",ch,method,properties)
+    print("-->",ch,method,properties)#ch为管道内存对象地址
     #time.sleep(30)
     print(" [x] Received %r" % body)
 

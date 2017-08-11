@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Enum,DATE,Integer, String,ForeignKey
 from sqlalchemy.orm import sessionmaker,relationship
 
-engine = create_engine("mysql+pymysql://root:alex3714@192.168.16.86/oldboydb",
+engine = create_engine("mysql+pymysql://admin:admin@172.16.34.194/PCdb",
                        encoding='utf-8')
 
 Base = declarative_base()  # 生成orm基类
@@ -41,19 +41,21 @@ Base.metadata.create_all(engine)  # 创建表结构
 Session_class = sessionmaker(bind=engine)  # 创建与数据库的会话session class ,注意,这里返回给session的是个class,不是实例
 session = Session_class()  # 生成session实例 #cursor
 
-# s1 = Student(name="Alex",register_date="2014-05-21")
-# s2 = Student(name="Jack",register_date="2014-03-21")
-# s3 = Student(name="Rain",register_date="2014-02-21")
-# s4 = Student(name="Eric",register_date="2013-01-21")
-#
-# study_obj1 = StudyRecord(day=1,status="YES", stu_id=1)
-# study_obj2 = StudyRecord(day=2,status="NO", stu_id=1)
-# study_obj3 = StudyRecord(day=3,status="YES", stu_id=1)
-# study_obj4 = StudyRecord(day=1,status="YES", stu_id=2)
-#
-# session.add_all([s1,s2,s3,s4,study_obj1,study_obj2,study_obj3,study_obj4])
+s1 = Student(name="Alex",register_date="2014-05-21")
+s2 = Student(name="Jack",register_date="2014-03-21")
+s3 = Student(name="Rain",register_date="2014-02-21")
+s4 = Student(name="Eric",register_date="2013-01-21")
+
+study_obj1 = StudyRecord(day=1,status="YES", stu_id=1)
+study_obj2 = StudyRecord(day=2,status="NO", stu_id=1)
+study_obj3 = StudyRecord(day=3,status="YES", stu_id=1)
+study_obj4 = StudyRecord(day=1,status="YES", stu_id=2)
+
+session.add_all([s1,s2,s3,s4,study_obj1,study_obj2,study_obj3,study_obj4])
 #
 
 stu_obj = session.query(Student).filter(Student.name=="alex").first()
 print(stu_obj.my_study_record)
+print(stu_obj)
 session.commit()
+
