@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tab</title>
+    <script src="jquery-1.12.4.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .outer {
+            width: 500px;
+            margin: 0 auto;
+            background-color: #333333;
+            color: white;
+        }
+
+        .outer li {
+            display: inline-block;
+            list-style: none;
+            line-height: 50px;
+            width: 80px;
+            text-align: center;
+
+        }
+        .inner{
+            height: 300px;
+            background-color: #139412;
+            border: 1px solid transparent;
+
+        }
+        .hide {
+            display: none;
+        }
+        .current{
+            background-color: #f42760;
+            color: black;
+            border: solid 2px transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <ul>
+            <li class="current" conctent="c1">菜单一</li>
+            <li conctent="c2">菜单二</li>
+            <li conctent="c3">菜单三</li>
+        </ul>
+        <div class="inner">
+            <div text_con="c1">我是内容一</div>
+            <div text_con="c2" class="hide">我是内容二</div>
+            <div text_con="c3" class="hide">我是内容三</div>
+        </div>
+    </div>
+    <script src="jquery-1.12.4.js"></script>
+    <script>
+        $("li").click(function () {
+            $(this).addClass("current").siblings().removeClass("current");
+            $("[text_con="+$(this).attr('conctent')+"]").removeClass("hide").siblings().addClass("hide");
+
+
+
+        })
+
+
+    </script>
+</body>
+</html>
