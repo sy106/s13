@@ -1,0 +1,197 @@
+Django最后一天
+
+
+一、一大波model操作
+	
+	1. 创建数据库表
+		# 单表
+		# app01_user ==> tb1
+		# users
+		class User(models.Model):
+			name = models.CharField(max_length=32)
+			pwd = models.CharField(max_length=32)
+			
+			class Meta:
+				# 数据库中生成的表名称 默认 app名称 + 下划线 + 类名
+				db_table = "tb1"
+
+				index_together = [
+					("name", 'pwd'),
+				]
+				# 最左前缀的模式：
+				# select * from where name='xx'
+				# select * from where name='xx' and email = 'xx'
+				# select * from where email = 'xx' # 无法命中索引
+				
+				unique_together = (("driver", "restaurant"),)
+				
+				verbose_name = “上课记录”
+				verbose_name_plural=““上课记录””
+		
+		# 一对多/一对一/多对多
+		
+		一对多：
+				def func():
+						
+					return 5
+				
+				
+				class UserType(models.Model):
+					name = models.CharField(max_length=32)
+					
+				
+				class User(models.Model):
+					name = models.CharField(max_length=32)
+					pwd = models.CharField(max_length=32)
+					....         ForiegnKey(to="UserType",to_field='id',on_delete=models.SET(func))
+				
+				# delete from user where id=1
+				# delete from UserType where id=1 # 报错
+				
+				# UserType.objects.filter(id=1).delete()
+			
+			
+				
+				# 正向
+				# v = User.objects.all()
+				# for item in v:
+				#     item.user
+				#     item.pwd
+				#     item.ut.name
+
+				# User.objects.all().values('user','ut__name')
+
+				# 反向
+				# v = UserType.objects.all()
+				# for item in v:
+				#     item.name
+				#     item.id
+				#     item.user_set.all() # item.b.all()
+
+
+				# models.UserType.objects.all().values('name','user__pwd')
+				
+		多对多：
+			a. django创建第三张表
+				m2m.remove
+				m2m.add
+				m2m.set
+				m2m.clear
+				m2m.filter()
+			b. 自定义第三张表（无m2m字段）
+				
+				自己链表查询
+				
+			c. 自定义第三张表（有m2m字段）
+				# 通过m2m字段查操作
+				# 通过m2m字段 clear
+		
+		
+		
+		
+	2. 操作数据库表
+		- 基本操作
+		- QuerySet中的方法：
+			- 返回QuerySet类型（select_related，prefetch_related）
+				
+				select_related
+				
+					users = models.User.objects.all().select_related('ut')
+					for row in users:
+						print(row.user,row.pwd,row.ut_id)
+						print(row.ut.name)
+						print(row.tu.name) # 再发起一次SQL请求
+				
+				prefetch_related
+					
+					users = models.User.objects.filter(id__gt=30).prefetch_related('ut','tu')
+					# select * from users where id > 30
+					# 获取上一步骤中所有的ut_id=[1,2]
+					# select * from user_type where id in [1,2]
+					# select * from user_type where id in [1,2]
+					
+					for row in users:
+						print(row.user,row.pwd,row.ut_id)
+						print(row.ut.name)
+					
+	3. 数据验证（弱）
+		
+		full_clean进行验证
+			- 每个字段的正则
+			- clean钩子
+	
+	
+二、Form操作
+	1. 数据验证（强大）
+		- 每一个字段（正则，字段钩子）
+		- clean
+		- _post_clean
+		
+		对于错误信息：__all__
+		
+		
+四、序列化操作
+	
+	ErrorDict
+		- 自定义encoder
+		
+	QuerySet
+			第一种：
+				from django.core import serializers
+				
+				v = models.tb.objects.all()
+				data = serializers.serialize("json", v)
+				
+			第二种：
+				
+				import json 
+				from datetime import date 
+				from datetime import datetime 
+				   
+				class JsonCustomEncoder(json.JSONEncoder): 
+					
+					def default(self, field): 
+					 
+						if isinstance(field, datetime): 
+							return field.strftime('%Y-%m-%d %H:%M:%S') 
+						elif isinstance(field, date): 
+							return field.strftime('%Y-%m-%d') 
+						else: 
+							return json.JSONEncoder.default(self, field) 
+   
+				v = models.tb.objects.values('id','name','ctime')
+				v = list(v)
+				v = json.dumps(v,cls=JsonCustomEncoder)
+			
+作业：
+	1. 主站
+	2. 个人站点
+	3. 后台管理
+		=> 登录、注册（Ajax+Form验证）
+		=> 个人博客注册
+		=> 标签
+		=> 分类操作
+	
+	
+	
+三、ModelForm
+	1. 数据库操作
+	2. 数据验证
+	==》 
+		- 小型
+		- 自定制admin
+
+	
+五、Ajax操作
+	- 原生ajax
+	- 跨域请求（jsonp,CORS）
+	- Ajax上传文件（2种）
+	
+六、验证码（session实现验证码）
+
+
+
+
+
+
+

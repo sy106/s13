@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body style="margin: 0">
+    <div style="height: 48px;background-color: #dddddd"></div>
+    <div>
+        <form action="/home" method="post">
+            <input type="text" name="username" placeholder="用户名" />
+            <input type="text" name="email"  placeholder="邮箱"/>
+            <input type="text" name="gender"  placeholder="性别"/>
+            <input type="submit" value="添加" />
+        </form>
+    </div>
+    <div>
+        <table>
+            {% for row in user_list %}
+                <tr>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.gender }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>
+                        <a href="/detail?nid={{ row.id }}">查看详细</a> |
+                        <a class="del" href="#" row-id="{{ row.id }}">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    <div class="hide" id="del-page" >
+        <form action="/del_host" method="post">
+            <input id="nid" type="text" name="nid" />
+            <p>
+                <input type="submit" value="提交" />
+                <input type="button" value="取消" />
+            </p>
+        </form>
+    </div>
+<script src="/static/jquery-1.12.4.js"></script>
+<script>
+    $('.del').click(function(){
+        $('#del-page').removeClass('hide');
+        var row_id = $(this).attr('row-id');
+        console.log(row_id)
+        $('#nid').val(row_id);
+    })
+</script>
+</body>
+</html>
