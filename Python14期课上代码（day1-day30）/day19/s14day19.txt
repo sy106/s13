@@ -63,7 +63,7 @@
 
 一、路由系统，URL
 	1、url(r'^index/', views.index),    
-	   url(r'^home/', views.Home.as_view()),
+	   url(r'^home/', views.Home.as_view()),#home是个类
 	2、url(r'^detail-(\d+).html', views.detail),  
 	3、url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)
 	   
@@ -170,7 +170,7 @@
 	2、checkbox等多选的内容
 		request.POST.getlist()
 	3、上传文件
-		# 上传文件,form标签做特殊设置
+		# 上传文件,form标签做特殊设置：<form action="/login/" method="POST" enctype="multipart/form-data">
 		obj = request.FILES.get('fafafa')
 		obj.name
 		f = open(obj.name, mode='wb')
@@ -235,10 +235,9 @@
 			'app01',
 		]
 	c. 执行命令
-		python manage.py  makemigrations
-		python manage.py  migrate
-		
-	d. ********** 注意 ***********
+		python manage.py  makemigrations 创建数据库链接
+		python manage.py  migrate 创建数据库
+ 	d. ********** 注意 ***********
 		Django默认使用MySQLdb模块链接MySQL
 		主动修改为pymysql，在project同名文件夹下的__init__文件中添加如下代码即可：
 			import pymysql
@@ -278,7 +277,7 @@
 			auto_now           -> 创建时，自动生成时间
 			auto_now_add       -> 更新时，自动更新为当前时间
 			
-				# obj = UserGroup.objects.filter(id=1).update(caption='CEO')
+				# obj = UserGroup.objects.filter(id=1).update(caption='CEO')不生效
 				# obj = UserGroup.objects.filter(id=1).first()
 				# obj.caption = "CEO"
 				# obj.save()
@@ -319,8 +318,8 @@
 	=================== 作业：用户管理 ====================
 	1、用户组的增删改查
 	2、用户增删该查
-		- 添加必须是对话框
-		- 删除必须是对话框
+		- 添加必须是模态对话框
+		- 删除必须是模态对话框
 		- 修改，必须显示默认值
 		
 	3、比较好看的页面

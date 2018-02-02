@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^cmdb/', include("app01.urls")),
     url(r'^monitor/', include("app02.urls")),
+
 ]
 
 """

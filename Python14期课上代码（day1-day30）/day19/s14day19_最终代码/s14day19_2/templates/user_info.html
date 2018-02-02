@@ -2,59 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Basic Dialog - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.5.2/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.5.2/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.5.2/demo/demo.css">
+    <script type="text/javascript" src="/static/jquery-easyui-1.5.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
     <style>
-        body{
-            margin: 0;
-        }
-        .menu{
-            display: block;
-            padding: 5px;
+            body{
+                margin: 0;
+            }
+            .menu{
+                display: block;
+                padding: 5px;
 
-        }
-    </style>
+            }
+        </style>
 </head>
 <body>
-    <div style="height: 48px;background-color: black;color: white">
-        张扬凌晨三点玩愤怒的小鸟
-    </div>
-    <div>
-        <div style="position: absolute;top:48px;bottom: 0;left: 0;width: 200px;background-color: brown;">
-            <a class="menu" href="/cmdb/user_info/">用户管理</a>
-            <a class="menu" href="/cmdb/user_group/">用户组管理</a>
-        </div>
-        <div style="position:absolute;top:48px;left: 210px;bottom: 0;right: 0;overflow: auto">
+<h2>用户列表</h2>
+<p>Click the open button below to open the modal window.</p>
 
-            <h3>添加用户</h3>
-            <form method="POST" action="/cmdb/user_info/">
-                <input type="text" name="user" />
-                <input type="text" name="pwd" />
+<div style="margin:20px 0;">
+    {% for row in user_list %}
+        <li>
+            <a href="/cmdb/userdetail-{{ row.id }}/">{{ row.username }}</a> |
+            <span> {{ row.user_group.caption }} </span>
+            <a href="javascript:void(0)"class="easyui-linkbutton" onclick="$('#w').window('close')">删除</a> |
+            <a href="javascript:void(0)"class="easyui-linkbutton" onclick="$('#w').window('open')">编辑</a>
+        </li>
+{#        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('open')">编辑</a>#}
+{#        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#w').window('close')">Close</a>#}
+    {% endfor %}
+</div>
+<div id="w" class="easyui-window" title="Modal Window" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:200px;padding:10px;">
+    <h1>编辑用户</h1>
+    <form method="post" action="/cmdb/useredit-{{ obj.id }}/">
+        <input style="display: none" type="text" name="id" value="{{ obj.id }}" />
+        <input type="text" name="username" value="{{ obj.username }}" />
+        <input type="text" name="password" value="{{ obj.password }}"/>
 
-                <select name="group_id">
-                    {% for item in group_list %}
-                        <option value="{{ item.uid }}">{{ item.caption }}</option>
-                    {% endfor %}
-                </select>
+        <select name="group_id">
+            {% for item in group_list %}
+                {% ifequal item.caption obj.user_group.caption %}
+                    <option value="{{ item.uid }}" selected="selected">{{ item.caption }}</option>
+                {% else %}
+                    <option value="{{ item.uid }}">{{ item.caption }}</option>
+                {% endifequal %}
+            {% endfor %}
+        </select>
+        <input type="submit" value="提交" />
+    </form>
 
-                <input type="submit" value="添加"/>
-            </form>
-
-            <h3>用户列表</h3>
-            <ul>
-                {% for row in user_list %}
-                    <li>
-                        <a href="/cmdb/userdetail-{{ row.id }}/">{{ row.username }}</a> |
-                        <span> {{ row.user_group.caption }} </span>
-                        <a href="/cmdb/userdel-{{ row.id }}/">删除</a> |
-                        <a href="/cmdb/useredit-{{ row.id }}/">编辑</a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-
-        </div>
-
-    </div>
-
+</div>
 </body>
 </html>

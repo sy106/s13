@@ -21,9 +21,12 @@ urlpatterns = [
     url(r'^login/', views.login),
     url(r'^index/', views.index),
     url(r'^user_info/', views.user_info),
+    url(r'^user_group/', views.user_group),
+    url(r'^groupdel-(?P<uid>\d+)/', views.group_del),
     url(r'^userdetail-(?P<nid>\d+)/', views.user_detail),
     url(r'^userdel-(?P<nid>\d+)/', views.user_del),
     url(r'^useredit-(?P<nid>\d+)/', views.user_edit),
+    url(r'^groupedit-(?P<uid>\d+)/', views.group_edit),
     url(r'^orm/', views.orm),
 ]
 

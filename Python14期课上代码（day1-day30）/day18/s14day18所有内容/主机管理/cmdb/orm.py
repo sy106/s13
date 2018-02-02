@@ -58,5 +58,5 @@ u3 = User(username="sy106",pwd="345")
 
 session.add_all([s1,s2,s3,u1,u2,u3])
 
-# session.commit()
+session.commit()
 

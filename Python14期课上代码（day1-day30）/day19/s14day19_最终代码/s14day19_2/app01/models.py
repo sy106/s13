@@ -7,7 +7,7 @@ from django.db import models
 
 class UserGroup(models.Model):
     uid = models.AutoField(primary_key=True)
-    caption = models.CharField(max_length=32,unique=True)
+    caption = models.CharField(max_length=32 ,unique=True)
     ctime = models.DateTimeField(auto_now_add=True, null=True)
     uptime = models.DateTimeField(auto_now=True, null=True)
     # f = models.ForeignKey('Foo')

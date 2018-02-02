@@ -1,8 +1,9 @@
 from django.shortcuts import render,HttpResponse,redirect
+from django.db import models
 
 def login(request):
-    models.UserGroup.objects.create(caption='DBA')
-
+    # models.UserGroup.objects.create(caption='DBA')
+    error_msg = ""
     if request.method == "GET":
         return render(request, 'login.html')
     elif request.method == "POST":
@@ -16,27 +17,49 @@ def login(request):
         if obj:
             return redirect('/cmdb/index/')
         else:
-            return render(request, 'login.html')
+            error_msg = "用户名或密码错误"
+            return render(request, 'login.html',{'error_msg': error_msg})
     else:
         # PUT,DELETE,HEAD,OPTION...
+
+        # 用户密码不配
+
         return redirect('/index/')
 
 
 def index(request):
     return render(request, 'index.html')
 
-def user_info(request):
+def user_info(request,nid):
     if request.method == "GET":
         user_list = models.UserInfo.objects.all()
+        obj = models.UserInfo.objects.filter(id=nid).first()
+        group_list = models.UserGroup.objects.all()
+
+        return render(request, 'user_info.html', {'user_list': user_list, "group_list": group_list,'obj': obj})
+
+    elif request.method == 'POST':
+        nid = request.POST.get('id')
+        u = request.POST.get('user')
+        p = request.POST.get('pwd')
+        c = request.POST.get('group_id')
+        models.UserInfo.objects.create(username=u,password=p,user_group_id=c)
+        return redirect('/cmdb/user_info/')
+        # user_list = models.UserInfo.objects.all()
+        # return render(request, 'user_info.html', {'user_list': user_list})
+
+
+def user_group(request):
+    if request.method == "GET":
 
         group_list = models.UserGroup.objects.all()
 
-        return render(request, 'user_info.html', {'user_list': user_list, "group_list": group_list})
+        return render(request, 'user_group.html', {"group_list": group_list})
     elif request.method == 'POST':
-        u = request.POST.get('user')
-        p = request.POST.get('pwd')
-        models.UserInfo.objects.create(username=u,password=p)
-        return redirect('/cmdb/user_info/')
+
+        c = request.POST.get('caption')
+        models.UserGroup.objects.create(caption=c)
+        return redirect('/cmdb/user_group/')
         # user_list = models.UserInfo.objects.all()
         # return render(request, 'user_info.html', {'user_list': user_list})
 
@@ -50,17 +73,45 @@ def user_del(request, nid):
     models.UserInfo.objects.filter(id=nid).delete()
     return redirect('/cmdb/user_info/')
 
+def group_del(request, uid):
+    models.UserGroup.objects.filter(uid=uid).delete()
+    return redirect('/cmdb/user_group/')
+
 def user_edit(request, nid):
     if request.method == "GET":
         obj = models.UserInfo.objects.filter(id=nid).first()
-        return render(request, 'user_edit.html',{'obj': obj})
+        group_list = models.UserGroup.objects.all()
+        return render(request, 'user_edit.html',{'obj': obj,"group_list": group_list})
     elif request.method == "POST":
         nid = request.POST.get('id')
         u = request.POST.get('username')
         p = request.POST.get('password')
-        models.UserInfo.objects.filter(id=nid).update(username=u,password=p)
+        c = request.POST.get('group_id')
+        models.UserInfo.objects.filter(id=nid).update(username=u,password=p,user_group_id=c)
         return redirect('/cmdb/user_info/')
 
+def group_edit(request, uid):
+    if request.method == "GET":
+        group_list = models.UserGroup.objects.all()
+        obj = models.UserGroup.objects.filter(uid=uid).first()
+        return render(request, 'group_edit.html', {'obj': obj, "group_list": group_list})
+    elif request.method == "POST":
+        uid = request.POST.get('uid')#原来的UID
+        c = request.POST.get('group_caption')#改动后的caption
+
+        obj1=models.UserGroup.objects.filter(uid=uid).first()
+        for item in models.UserGroup.objects.all():
+            if c == item.caption:
+                error_msg = "group 的名字重复！请重新编辑！"
+                group_list = models.UserGroup.objects.all()
+                obj = models.UserGroup.objects.filter(uid=uid).first()
+                return render(request, 'group_edit.html',{'error_msg': error_msg,'obj': obj, "group_list": group_list})
+        obj1.caption = c
+        obj1.save()
+
+
+
+        return redirect('/cmdb/user_group/')
 from app01 import models
 def orm(request):
     # 创建

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物</title>
+    <style>
+        .pg-header {
+            height: 30px;
+            background-color: #dddddd;
+            line-height: 30px;
+        }
+
+        .header2 {
+            height: 40px;
+            background-color: red;
+            line-height: 40px;
+            color: white;
+        }
+
+        #促销图片 {
+            float: left;
+            text-align: center;
+            padding: 5px;
+        }
+
+        #inputSearch {
+            float: left;
+            height: 20px;
+            width: 120px;
+            padding: 10px;
+        }
+
+        #btnSubmit {
+            float: left;
+            /*height: 30px;*/
+            /*width: 100px;*/
+            padding: 10px;
+
+        }
+
+        #购物车 {
+            float: right;
+            text-align: center;
+            padding: 10px;
+
+        }
+
+        #南方水果 {
+            float: left;
+            padding: 10px;
+            /*height:60%;*/
+            border: 1px solid gray;
+            width: 200px;
+
+        }
+
+        #热销 {
+            border: 1px solid rgba(128, 128, 128, 0.19);
+            background-color: #dddddd;
+            height: 30px;
+            width: 178px;
+            float: left;
+            padding: 10px;
+        }
+
+        #福特 {
+            float: left;
+            padding: 20px;
+            width: 60%;
+
+        }
+
+        #图像列表 {
+            float: left;
+            text-align: center;
+            padding: 10px;
+            width: 920px;
+            border: 1px solid red;
+
+        }
+
+        #pic {
+            text-align: justify;
+            padding: 10px;
+            width: 96px;
+            height: 30px;
+
+        }
+
+
+    </style>
+</head>
+
+<body style="margin: 0">
+<div class="pg-header">
+    <div style="width: 1200px;margin: 0 auto;">
+        <div style="float: left;">收藏本站</div>
+        <div style="float: right;">
+            <a>登录</a>
+            <a>注册</a>
+            <a>我的订单</a>
+            <a>我的收藏</a>
+            <a>VIP会员俱乐部</a>
+            <a>客户服务</a>
+            <a>关注</a>
+            <a>手机版</a>
+
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div>
+    <div style="width: 900px;margin: 0 auto;">
+        <div id="促销图片">
+            <img src="捕获3.PNG" title="促销" style="height: 50px;width: 120px;">
+        </div>
+        <span id="inputSearch">
+                <input class="search" title="请输入关键字" type="text">
+            </span>
+        <div id="btnSubmit">
+            <!--<input type = "button">-->
+            <input value="搜索" title="search" type="button">
+        </div>
+
+        <div id="购物车">
+            <div style="height: 20px;width: 100px;background-color: #dddddd">
+                购物车2件
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+</div>
+<div class="header2">
+    <div style="width: 1200px;margin: 0 auto;">
+        <div style="width:15%;float: left;"><a><b>全部商品分类</b></a></div>
+        <div style="float: left;">
+            <a><b>首页</b></a>
+            <a><b>网上超市</b></a>
+            <a><b>水果超市</b></a>
+            <a><b>超级订餐</b></a>
+            <a><b>生活娱乐</b></a>
+            <a><b>研究院</b></a>
+        </div>
+        <div style="width:20%;float: right;">
+            <a><b>研究院</b></a>
+            <a><b>研究院</b></a>
+            <a><b>论坛</b></a>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="南方水果">
+        <div style="border: 1px solid gray;padding: 10px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;padding: 10px;border-top:0px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;padding: 10px;border-top:0px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;padding: 10px;border-top:0px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;padding: 10px;border-top:0px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <div style="border: 1px solid gray;padding: 10px;border-top:0px;">
+            <b>南方水果</b>
+            <br>
+            <p style="font-size:10px;">火龙果 火龙果 火龙果</p>
+        </div>
+        <br><br>
+        <div id="热销">
+            <b>热销排行榜</b>
+        </div>
+        <div style="border: 1px solid gray;">
+            content
+        </div>
+    </div>
+    <div>
+        <div id="福特">
+            <b><h4>福特>蒙迪欧>2.0T</h4></b>
+            <table width="940" height="20" border="1" align="center" cellpadding="5" cellspacing="0"
+                   style=" border-top:3px solid #ff1330;
+                    border-right:1px solid rgba(128, 128, 128, 0.15);
+                    border-bottom:0px ;
+                    border-left:1px solid rgba(128, 128, 128, 0.15);">
+                <tr>
+                    <td style="padding: 10px"><b>您已选择：</b>&nbsp; &nbsp;苹果</td>
+                </tr>
+            </table>
+
+            <table width="940" height="60" border="1" align="center" cellpadding="5" cellspacing="0"
+                   style="border-top:0px ;
+                    border-right:1px solid rgba(128, 128, 128, 0.15);
+                    border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                    border-left:1px solid rgba(128, 128, 128, 0.15);">
+                <tr>
+                    <td style="padding: 10px"><b>&nbsp; &nbsp;&nbsp; &nbsp;材质：</b>&nbsp; &nbsp;苹果&nbsp; &nbsp;苹果&nbsp;
+                        &nbsp;苹果
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px"><b>&nbsp; &nbsp;&nbsp; &nbsp;品牌：</b>&nbsp; &nbsp;苹果&nbsp; &nbsp;苹果&nbsp;
+                        &nbsp;苹果
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px"><b>&nbsp; &nbsp;&nbsp; &nbsp;风格：</b>&nbsp; &nbsp;苹果&nbsp; &nbsp;苹果&nbsp;
+                        &nbsp;苹果
+                    </td>
+                </tr>
+
+            </table>
+            <div style="width: 120px;height:20px;border: 1px solid rgba(128, 128, 128, 0.15);text-align:center;margin:0px auto">
+                更多选项
+            </div>
+            <div style="border: 1px solid lightgray;width: 920px;padding: 10px">
+                排序:&nbsp;&nbsp;&nbsp;&nbsp;价格&#8681;&nbsp;&nbsp;销量&#8681;&nbsp;&nbsp;最新&#8679;
+                <div style="border: 1px solid lightgray;float: right;width:15px;text-align: center;">
+                    &#155;</div>
+                <div style="float: right">&nbsp;</div>
+                <div style="border: 1px solid lightgray;width:15px;float: right;text-align: center;">
+                    &#139;
+                </div>
+
+                <div style="float: right;color: red;width: 20%;">
+                    共XX件商品&nbsp;&nbsp; <b>1</b>
+                    <div style="float: right;color: black;width:40%">/675
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div id="图像列表">
+                <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                 <div style="width: 200px;height:230px;border: 1px solid green;float: left;margin:13px;">
+
+                    <div><img src="pic.PNG" title="product" style="height: 150px;width:180px; "></div>
+                    <div style="text-align: center;margin: 0 auto;">欧凯隆&nbsp;&nbsp;景德镇骨瓷欧凯隆</div>
+                    <div>
+                        <div style="float: left;margin: 10px;color: red">&#165;&nbsp;69.00</div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;
+                        ">&#8722;</div>
+                        <div style="
+                        border-top:1px solid rgba(128, 128, 128, 0.15);
+                        border-right:0px ;
+                        border-bottom:1px solid rgba(128, 128, 128, 0.15);
+                        border-left:0px ;float: left;width: 22px;padding: 3px;">1
+                        </div>
+                        <div style="float: right;width:30px;height: 20px;background-color: red;color: white; text-align: center;margin: 2px;padding: 3px">
+                            买
+                        </div>
+                        <div style="
+                        border:1px solid rgba(128, 128, 128, 0.15);float: left;padding: 3px;">&#43;</div>
+                    </div>
+
+                </div>
+                <div style="clear: both;"></div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

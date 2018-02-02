@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .menu{
+            display: block;
+            padding: 5px;
+
+        }
+    </style>
+</head>
+<body>
+    <div style="height: 48px;background-color: black;color: white">
+        ????
+    </div>
+    <div>
+        <div style="position: absolute;top:48px;bottom: 0;left: 0;width: 200px;background-color: #68d8ff;">
+            <a class="menu" href="/cmdb/user_info/">????</a>
+            <a class="menu" href="/cmdb/user_group/">?????</a>
+        </div>
+        <div style="position:absolute;top:48px;left: 210px;bottom: 0;right: 0;overflow: auto">
+
+            <h3>????</h3>
+            <form method="POST" action="/cmdb/user_info/">
+                <input type="text" name="user" placeholder="???"/>
+                <input type="text" name="pwd"placeholder="??" />
+
+                <select name="group_id">
+                    {% for item in group_list %}
+                        <option value="{{ item.uid }}">{{ item.caption }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" value="??"/>
+            </form>
+
+            <h3>????</h3>
+            <ul>
+                {% for row in user_list %}
+                    <li>
+                        <a href="/cmdb/userdetail-{{ row.id }}/">{{ row.username }}</a> |
+                        <span> {{ row.user_group.caption }} </span>
+                        <a href="/cmdb/userdel-{{ row.id }}/">??</a> |
+                        <a href="/cmdb/useredit-{{ row.id }}/">??</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+
+    </div>
+
+</body>
+</html>

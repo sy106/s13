@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .menu{
+            display: block;
+            padding: 5px;
+
+        }
+    </style>
+</head>
+<body>
+<div style="height: 48px;background-color: black;color: white">
+    张扬凌晨三点玩愤怒的小鸟
+</div>
+<div>
+    <div style="position: absolute;top:48px;bottom: 0;left: 0;width: 200px;background-color: #68d8ff;">
+        <a class="menu" href="/cmdb/user_info/">用户管理</a>
+        <a class="menu" href="/cmdb/user_group/">用户组管理</a>
+    </div>
+    <div style="position:absolute;top:48px;left: 210px;bottom: 0;right: 0;overflow: auto">
+
+        <h3>添加组</h3>
+        <form method="POST" action="/cmdb/user_group/">
+            <input type="text" name="caption" placeholder="用户组"/>
+{##}
+{#            <select name="group_id">#}
+{#                {% for item in group_list %}#}
+{#                    <option value="{{ item.uid }}">{{ item.caption }}</option>#}
+{#                {% endfor %}#}
+{#            </select>#}
+
+            <input type="submit" value="添加"/>
+        </form>
+
+        <h3>用户组列表</h3>
+        <ul>
+            {% for row in group_list %}
+                <li>
+{#                    <a href="/cmdb/userdetail-{{ row.id }}/">{{ row.caption }}</a> |#}
+{#                    <span> {{ row.user_group.caption }} </span>#}
+                    <span>{{ row.caption }}</span>
+                    <a href="/cmdb/groupdel-{{ row.uid }}/">删除</a> |
+                    <a href="/cmdb/groupedit-{{ row.uid }}/">编辑</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

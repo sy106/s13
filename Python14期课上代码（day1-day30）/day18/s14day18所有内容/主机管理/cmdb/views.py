@@ -22,7 +22,9 @@ def login(request):
         # pwd=request.POST['pwd']
         # console.log(v);
         print("==========1:",user,pwd)
-        obj= session.query(orm.User).filter(orm.User.username == user).first()
+        obj= session.query(orm.User).filter(orm.User.username == user).first(
+
+        )
         print ("========2:",obj.username,obj.pwd)
         if user ==obj.username and pwd == obj.pwd:
             # 去跳转到
